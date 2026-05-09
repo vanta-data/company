@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Score de Madurez Analítica · Vanta Analytics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --ink: #1A1612;
+    --scout: #B5451B;
+    --meridian: #1A527A;
+    --zenith: #2A5F47;
+    --scout-light: #F0E8E3;
+    --meridian-light: #E3EDF5;
+    --zenith-light: #E3EEE9;
+    --mid: #8C8480;
+    --border: rgba(26,22,18,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'Figtree', sans-serif;
+    font-weight: 400;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .brand {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--scout);
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--scout);
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: var(--mid);
+    line-height: 1.6;
+    max-width: 520px;
+    font-weight: 300;
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    margin-bottom: 40px;
+  }
+
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+
+  .progress-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  .progress-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--scout);
+  }
+
+  .progress-track {
+    height: 2px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--scout);
+    border-radius: 2px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+
+  /* Dimension label */
+  .dimension-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 12px 5px 8px;
+    border-radius: 2px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    border: 1px solid currentColor;
+    opacity: 0.75;
+  }
+
+  .dimension-badge .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* Question card */
+  .question-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 36px;
+    margin-bottom: 24px;
+    animation: slideIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 12px rgba(26,22,18,0.04);
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .question-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--mid);
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+  }
+
+  .question-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 28px;
+  }
+
+  /* Options */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    background: transparent;
+    text-align: left;
+    width: 100%;
+  }
+
+  .option:hover {
+    border-color: var(--scout);
+    background: var(--scout-light);
+  }
+
+  .option.selected {
+    border-color: var(--scout);
+    background: var(--scout-light);
+  }
+
+  .option-indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    flex-shrink: 0;
+    margin-top: 1px;
+    transition: all 0.18s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .option.selected .option-indicator {
+    border-color: var(--scout);
+    background: var(--scout);
+  }
+
+  .option.selected .option-indicator::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: white;
+  }
+
+  .option-score {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--mid);
+    flex-shrink: 0;
+    margin-top: 2px;
+    width: 18px;
+    text-align: center;
+  }
+
+  .option-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink);
+    flex: 1;
+  }
+
+  /* Navigation */
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    border: 1.5px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.18s ease;
+  }
+
+  .btn:hover {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .btn-primary {
+    background: var(--scout);
+    border-color: var(--scout);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: #9B3A16;
+    border-color: #9B3A16;
+    color: white;
+  }
+
+  .btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .btn:disabled:hover {
+    background: transparent;
+    color: var(--ink);
+  }
+
+  .btn-primary:disabled:hover {
+    background: var(--scout);
+    color: white;
+  }
+
+  /* Results */
+  .results {
+    display: none;
+    animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .results-header {
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .total-score-wrap {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .total-score-number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 72px;
+    line-height: 1;
+    color: var(--scout);
+  }
+
+  .total-score-label {
+    font-size: 14px;
+    color: var(--mid);
+    padding-bottom: 12px;
+    line-height: 1.4;
+  }
+
+  .maturity-level {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 2px;
+    margin-top: 16px;
+  }
+
+  .level-inicial { background: #F5E8E3; color: var(--scout); border: 1px solid var(--scout); }
+  .level-emergente { background: #FBF0E6; color: #A06020; border: 1px solid #A06020; }
+  .level-estructurado { background: #E8EEF5; color: var(--meridian); border: 1px solid var(--meridian); }
+  .level-avanzado { background: var(--zenith-light); color: var(--zenith); border: 1px solid var(--zenith); }
+
+  .level-description {
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--mid);
+    line-height: 1.6;
+    max-width: 540px;
+  }
+
+  /* Dimension scores */
+  .dimensions-grid {
+    margin-top: 40px;
+  }
+
+  .dimensions-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 20px;
+  }
+
+  .dim-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dim-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    min-width: 160px;
+  }
+
+  .dim-bar-wrap {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: visible;
+    position: relative;
+  }
+
+  .dim-bar {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0;
+  }
+
+  .dim-score {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--ink);
+    min-width: 36px;
+    text-align: right;
+  }
+
+  .dim-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--mid);
+    min-width: 72px;
+    text-align: right;
+    letter-spacing: 0.06em;
+  }
+
+  /* Recommendation box */
+  .recommendation {
+    margin-top: 40px;
+    padding: 28px 32px;
+    background: white;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--scout);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .rec-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--scout);
+    margin-bottom: 12px;
+  }
+
+  .rec-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 19px;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+
+  .rec-body {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--mid);
+  }
+
+  .rec-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--scout);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.18s;
+  }
+
+  .rec-cta:hover { border-bottom-color: var(--scout); }
+
+  .restart-wrap {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .btn-export {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    border: 1.5px solid var(--scout);
+    background: transparent;
+    color: var(--scout);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.18s ease;
+  }
+
+  .btn-export:hover {
+    background: var(--scout);
+    color: white;
+  }
+
+  .btn-export svg {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+  }
+
+  .btn-email {
+    border-color: var(--meridian);
+    color: var(--meridian);
+  }
+
+  .btn-email:hover {
+    background: var(--meridian);
+    color: white;
+  }
+
+  .btn-email.sent {
+    border-color: var(--zenith);
+    color: var(--zenith);
+    pointer-events: none;
+    opacity: 0.8;
+  }
+
+  /* Hidden states */
+  .quiz-area { display: block; }
+  .quiz-area.hidden { display: none; }
+
+  /* ── PRINT / PDF STYLES ── */
+  @media print {
+    @page {
+      size: A4;
+      margin: 18mm 20mm 22mm;
+    }
+
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+    body {
+      background: white !important;
+      font-size: 11pt;
+    }
+
+    body::before { display: none; }
+
+    .container { padding: 0; max-width: 100%; }
+
+    /* Hide quiz and interactive controls */
+    .quiz-area,
+    .restart-wrap,
+    .rec-cta { display: none !important; }
+
+    /* Show results even if hidden */
+    .results { display: block !important; }
+
+    .header {
+      margin-bottom: 24pt;
+      padding-bottom: 16pt;
+      border-bottom: 1pt solid #ddd;
+    }
+
+    h1 { font-size: 26pt; margin-bottom: 8pt; }
+    h1 em { color: #B5451B !important; }
+
+    .brand { margin-bottom: 10pt; }
+    .brand::before { background: #B5451B !important; }
+
+    .results-header {
+      margin-bottom: 24pt;
+      padding-bottom: 16pt;
+    }
+
+    .total-score-number {
+      font-size: 52pt;
+      color: #B5451B !important;
+    }
+
+    .maturity-level { margin-top: 10pt; }
+
+    /* Force badge background colors in print */
+    .level-inicial  { background: #F5E8E3 !important; color: #B5451B !important; border: 1pt solid #B5451B !important; }
+    .level-emergente { background: #FBF0E6 !important; color: #A06020 !important; border: 1pt solid #A06020 !important; }
+    .level-estructurado { background: #E8EEF5 !important; color: #1A527A !important; border: 1pt solid #1A527A !important; }
+    .level-avanzado { background: #E3EEE9 !important; color: #2A5F47 !important; border: 1pt solid #2A5F47 !important; }
+
+    .dimensions-grid { margin-top: 24pt; page-break-inside: avoid; }
+
+    .dim-row { padding: 10pt 0; border-bottom: 0.5pt solid #e0dbd5; }
+
+    /* Replace animated bars with solid colored bars in print */
+    .dim-bar-wrap { background: #eee !important; }
+    .dim-bar { transition: none !important; }
+
+    .recommendation {
+      margin-top: 28pt;
+      padding: 18pt 22pt;
+      border-left: 3pt solid #B5451B !important;
+      page-break-inside: avoid;
+      background: #fafaf8 !important;
+    }
+
+    .rec-label { color: #B5451B !important; }
+
+    /* Print date footer */
+    .print-footer {
+      display: block !important;
+      margin-top: 32pt;
+      padding-top: 12pt;
+      border-top: 0.5pt solid #ddd;
+      font-family: 'DM Mono', monospace;
+      font-size: 8pt;
+      color: #aaa;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  /* Hide print footer on screen */
+  .print-footer { display: none; }
+
+  @media (max-width: 560px) {
+    .question-card { padding: 24px 20px; }
+    .total-score-number { font-size: 56px; }
+    .dim-row { flex-wrap: wrap; gap: 8px; }
+    .dim-name { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="brand"><span></span>Vanta Analytics · Scout</div>
+    <h1>Score de Madurez<br><em>Analítica</em></h1>
+    <p class="subtitle">5 dimensiones, 15 preguntas. Al final recibirá un diagnóstico preciso del estado actual de su negocio con datos.</p>
+  </div>
+
+  <!-- Quiz Area -->
+  <div class="quiz-area" id="quizArea">
+
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span class="progress-label">Progreso</span>
+        <span class="progress-count" id="progressCount">0 / 15</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <div id="dimensionBadge" class="dimension-badge">
+      <span class="dot"></span>
+      <span id="badgeText">—</span>
+    </div>
+
+    <div class="question-card" id="questionCard">
+      <div class="question-number" id="questionNumber">Pregunta 1 de 15</div>
+      <div class="question-text" id="questionText">—</div>
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="nav">
+      <button class="btn" id="btnBack" onclick="goBack()" disabled>← Atrás</button>
+      <button class="btn btn-primary" id="btnNext" onclick="goNext()" disabled>Siguiente →</button>
+    </div>
+
+  </div>
+
+  <!-- Results -->
+  <div class="results" id="resultsArea">
+
+    <div class="results-header">
+      <div class="brand"><span></span>Resultado</div>
+      <h1>Su diagnóstico<br><em>está listo.</em></h1>
+      <div class="total-score-wrap">
+        <div class="total-score-number" id="finalScore">—</div>
+        <div class="total-score-label">puntos<br>sobre 100</div>
+      </div>
+      <div class="maturity-level" id="maturityBadge">—</div>
+      <div class="level-description" id="maturityDesc">—</div>
+    </div>
+
+    <div class="dimensions-grid">
+      <div class="dimensions-title">Resultado por dimensión</div>
+      <div id="dimensionBars"></div>
+    </div>
+
+    <div class="recommendation" id="recommendationBox">
+      <div class="rec-label">Siguiente paso recomendado</div>
+      <div class="rec-title" id="recTitle">—</div>
+      <div class="rec-body" id="recBody">—</div>
+      <a href="#" class="rec-cta" id="recCta">Agendar diagnóstico con Vanta →</a>
+    </div>
+
+    <div class="restart-wrap">
+      <button class="btn" onclick="restartQuiz()">← Reiniciar</button>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <button class="btn-export" onclick="exportPDF()">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 13h10M8 3v7m0 0l-3-3m3 3l3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Exportar PDF
+        </button>
+        <button class="btn-export btn-email" onclick="sendEmail()">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 4h12v9H2V4zm0 0l6 5 6-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Enviar a Vanta
+        </button>
+      </div>
+    </div>
+
+    <div class="print-footer" id="printFooter">
+      <span>Vanta Analytics · Score de Madurez Analítica</span>
+      <span id="printDate"></span>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const DIMENSIONS = [
+  {
+    id: "datos",
+    name: "Captura de Datos",
+    color: "#B5451B",
+    shortDesc: "¿Qué datos captura y dónde viven?"
+  },
+  {
+    id: "herramientas",
+    name: "Herramientas",
+    color: "#1A527A",
+    shortDesc: "¿Con qué herramientas trabaja su equipo?"
+  },
+  {
+    id: "proceso",
+    name: "Procesos Analíticos",
+    color: "#2A5F47",
+    shortDesc: "¿Cómo fluyen el análisis y los reportes?"
+  },
+  {
+    id: "cultura",
+    name: "Cultura de Datos",
+    color: "#7A5520",
+    shortDesc: "¿Cómo usa su equipo la información?"
+  },
+  {
+    id: "decision",
+    name: "Decisiones Basadas en Datos",
+    color: "#1A1612",
+    shortDesc: "¿Sus decisiones se apoyan en evidencia?"
+  }
+];
+
+const QUESTIONS = [
+  // D1: Captura de datos
+  {
+    dim: 0,
+    text: "¿Cómo registra actualmente las ventas o transacciones del negocio?",
+    options: [
+      { text: "En papel, de memoria, o no las registramos sistemáticamente.", score: 1 },
+      { text: "En hojas de cálculo (Excel, Google Sheets) que actualizamos manualmente.", score: 2 },
+      { text: "Con un sistema POS o software de punto de venta.", score: 3 },
+      { text: "Con un ERP, CRM u otro sistema que centraliza la información automáticamente.", score: 4 }
+    ]
+  },
+  {
+    dim: 0,
+    text: "¿Cuántas fuentes de datos distintas generan información sobre el negocio (ventas, clientes, inventario, etc.)?",
+    options: [
+      { text: "Una sola fuente, o ninguna definida.", score: 1 },
+      { text: "Dos o tres fuentes, pero están desconectadas entre sí.", score: 2 },
+      { text: "Tres a cinco fuentes; ocasionalmente cruzamos información.", score: 3 },
+      { text: "Cinco o más fuentes integradas o en proceso de integración.", score: 4 }
+    ]
+  },
+  {
+    dim: 0,
+    text: "¿Con qué frecuencia se actualiza la información de ventas o clientes en sus registros?",
+    options: [
+      { text: "No hay un ciclo definido; se actualiza cuando alguien recuerda hacerlo.", score: 1 },
+      { text: "Semanal o quincenalmente.", score: 2 },
+      { text: "Diariamente, de forma manual.", score: 3 },
+      { text: "En tiempo real o de forma automatizada.", score: 4 }
+    ]
+  },
+
+  // D2: Herramientas
+  {
+    dim: 1,
+    text: "¿Cuál es la herramienta principal que usa para analizar la información del negocio?",
+    options: [
+      { text: "No usamos herramientas de análisis. Evaluamos por intuición o conversación.", score: 1 },
+      { text: "Excel o Google Sheets para reportes básicos.", score: 2 },
+      { text: "Power BI, Tableau u otra herramienta de visualización de datos.", score: 3 },
+      { text: "Una plataforma de BI conectada a datos en la nube con dashboards automatizados.", score: 4 }
+    ]
+  },
+  {
+    dim: 1,
+    text: "¿Cuánto tiempo dedica su equipo semanalmente a preparar reportes o consolidar información?",
+    options: [
+      { text: "Más de 8 horas — es un proceso manual y lento.", score: 1 },
+      { text: "Entre 4 y 8 horas.", score: 2 },
+      { text: "Entre 1 y 4 horas.", score: 3 },
+      { text: "Menos de 1 hora; la información está disponible casi automáticamente.", score: 4 }
+    ]
+  },
+  {
+    dim: 1,
+    text: "¿Sus reportes o análisis se generan de forma automática o requieren trabajo manual cada vez?",
+    options: [
+      { text: "Todo es manual, desde cero cada vez.", score: 1 },
+      { text: "Hay algunas plantillas, pero igual requieren trabajo manual considerable.", score: 2 },
+      { text: "La mayoría se generan solos, con ajustes menores.", score: 3 },
+      { text: "Están completamente automatizados y disponibles en tiempo real.", score: 4 }
+    ]
+  },
+
+  // D3: Procesos
+  {
+    dim: 2,
+    text: "¿Existe un proceso definido para revisar y analizar los resultados del negocio?",
+    options: [
+      { text: "No existe ningún proceso formal de revisión.", score: 1 },
+      { text: "Se revisan los números de vez en cuando, sin una cadencia fija.", score: 2 },
+      { text: "Hay reuniones periódicas de revisión, aunque no siempre con datos estructurados.", score: 3 },
+      { text: "Existe un ciclo formal de análisis con KPIs definidos y revisiones programadas.", score: 4 }
+    ]
+  },
+  {
+    dim: 2,
+    text: "¿Quién en su organización es responsable de analizar los datos y producir insights?",
+    options: [
+      { text: "Nadie tiene esa responsabilidad definida.", score: 1 },
+      { text: "Alguien lo hace informalmente cuando tiene tiempo.", score: 2 },
+      { text: "Una persona dedicada parte de su tiempo a esto, aunque no es su único rol.", score: 3 },
+      { text: "Hay un rol definido o un equipo dedicado al análisis de datos.", score: 4 }
+    ]
+  },
+  {
+    dim: 2,
+    text: "¿Cómo documenta y comunica los hallazgos o resultados del negocio?",
+    options: [
+      { text: "Verbalmente, sin documentación estructurada.", score: 1 },
+      { text: "Con correos o mensajes de WhatsApp con números puntuales.", score: 2 },
+      { text: "Con presentaciones o reportes en PDF/Excel que se comparten periódicamente.", score: 3 },
+      { text: "Con dashboards en vivo o reportes ejecutivos automáticos accesibles al equipo.", score: 4 }
+    ]
+  },
+
+  // D4: Cultura
+  {
+    dim: 3,
+    text: "Cuando surge una decisión importante, ¿cómo reacciona su equipo ante los datos?",
+    options: [
+      { text: "Los datos no participan en las decisiones; se decide por experiencia o intuición.", score: 1 },
+      { text: "A veces se buscan datos después de tomar la decisión, para validarla.", score: 2 },
+      { text: "Se intenta buscar datos antes de decidir, aunque no siempre están disponibles.", score: 3 },
+      { text: "La consulta de datos es parte natural del proceso de decisión en el equipo.", score: 4 }
+    ]
+  },
+  {
+    dim: 3,
+    text: "¿El equipo directivo o gerencial tiene confianza para leer e interpretar indicadores del negocio?",
+    options: [
+      { text: "No. Los números generan más confusión que claridad.", score: 1 },
+      { text: "Parcialmente. Entienden algunos números básicos, pero no análisis más complejos.", score: 2 },
+      { text: "Sí, en general. Aunque a veces necesitan apoyo para interpretar ciertos datos.", score: 3 },
+      { text: "Sí. El equipo es cómodo con datos y los usa activamente en conversaciones estratégicas.", score: 4 }
+    ]
+  },
+  {
+    dim: 3,
+    text: "¿Han tenido alguna experiencia positiva donde datos concretos mejoraron una decisión o resultado?",
+    options: [
+      { text: "No que recordemos. Nunca lo hemos vivido.", score: 1 },
+      { text: "Tal vez, pero no fue intencional ni replicable.", score: 2 },
+      { text: "Sí, en uno o dos casos puntuales.", score: 3 },
+      { text: "Sí, con frecuencia. Es parte de cómo operamos.", score: 4 }
+    ]
+  },
+
+  // D5: Decisiones
+  {
+    dim: 4,
+    text: "¿Cuáles de los siguientes KPIs conoce y monitorea con regularidad en su negocio?",
+    options: [
+      { text: "Ninguno de forma sistemática. Conocemos ventas totales, poco más.", score: 1 },
+      { text: "Ventas y costos básicos, pero no métricas operativas ni de cliente.", score: 2 },
+      { text: "Varios KPIs definidos: ventas, márgenes, rotación, clientes activos, u otros relevantes.", score: 3 },
+      { text: "Un cuadro completo de KPIs por área, con alertas cuando algo sale de rango.", score: 4 }
+    ]
+  },
+  {
+    dim: 4,
+    text: "¿Ha tomado en los últimos 6 meses alguna decisión importante basada en datos que haya impactado positivamente el negocio?",
+    options: [
+      { text: "No. Las decisiones se toman sin datos concretos.", score: 1 },
+      { text: "Una o dos veces, pero fue más intuición que análisis.", score: 2 },
+      { text: "Sí, en algunas ocasiones con datos parciales.", score: 3 },
+      { text: "Sí, con frecuencia y con datos claros que respaldaron la decisión.", score: 4 }
+    ]
+  },
+  {
+    dim: 4,
+    text: "¿Cuán rápido puede usted obtener una respuesta a una pregunta de negocio con datos (ej. ¿cuál fue mi producto más rentable este mes?)?",
+    options: [
+      { text: "No puedo obtenerla; no tenemos datos para responderla.", score: 1 },
+      { text: "Entre 2 y 5 días; alguien tendría que buscarlo manualmente.", score: 2 },
+      { text: "Pocas horas o un día; está en algún sistema o archivo.", score: 3 },
+      { text: "En minutos; está disponible en un dashboard o reporte automatizado.", score: 4 }
+    ]
+  }
+];
+
+let currentQ = 0;
+let answers = new Array(15).fill(null);
+
+const LEVEL_CONFIG = [
+  { min: 0,  max: 30, label: "Inicial",      cls: "level-inicial",     desc: "El negocio opera con muy poca información estructurada. La oportunidad de mejora es enorme y el primer paso genera valor de inmediato." },
+  { min: 31, max: 55, label: "Emergente",    cls: "level-emergente",   desc: "Existen algunos datos pero no se usan de forma sistemática. Hay piezas en su lugar; falta conectarlas y darles propósito." },
+  { min: 56, max: 75, label: "Estructurado", cls: "level-estructurado", desc: "La base analítica existe y funciona. El siguiente paso es automatizar, ampliar cobertura y traducir datos en decisiones más ágiles." },
+  { min: 76, max: 100,label: "Avanzado",     cls: "level-avanzado",    desc: "El negocio tiene una cultura de datos madura. El enfoque ahora es maximizar el retorno de esa capacidad con análisis más sofisticado." }
+];
+
+const RECS = [
+  { title: "Scout es el punto de partida correcto.", body: "Un diagnóstico formal de 90 minutos con Vanta Analytics le permitirá validar estas respuestas con datos reales, identificar los tres quick wins más accesibles y recibir un prototipo funcional con sus métricas críticas en 24 horas. Inversión: $250." },
+  { title: "Meridian puede transformar lo que ya tiene.", body: "Tiene datos dispersos con potencial sin explotar. Un proyecto de implementación BI de 8 semanas conectaría sus fuentes actuales, construiría los dashboards que realmente necesita y capacitaría a su equipo para usarlos. Comenzar con Scout es el paso natural." },
+  { title: "Zenith puede llevar su capacidad al siguiente nivel.", body: "Tiene una base analítica funcional. Lo que falta es un socio estratégico que evolucione el sistema con el negocio, genere insights mensuales accionables y responda preguntas difíciles con datos. Eso es exactamente lo que hace Zenith." },
+  { title: "Zenith como CDO externo maximiza su ventaja.", body: "Tiene la capacidad. El retainer Zenith la convierte en una ventaja competitiva sostenida: análisis especiales, alertas sobre métricas críticas, y un CDO externo con experiencia estratégica a una fracción del costo de contratar internamente." }
+];
+
+function getLevel(score) {
+  return LEVEL_CONFIG.find(l => score >= l.min && score <= l.max) || LEVEL_CONFIG[0];
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[currentQ];
+  const dim = DIMENSIONS[q.dim];
+
+  document.getElementById('progressCount').textContent = `${currentQ} / 15`;
+  document.getElementById('progressFill').style.width = `${(currentQ / 15) * 100}%`;
+
+  const badge = document.getElementById('dimensionBadge');
+  badge.style.color = dim.color;
+  badge.style.borderColor = dim.color;
+  document.getElementById('badgeText').textContent = `Dimensión ${q.dim + 1} · ${dim.name}`;
+
+  document.getElementById('questionNumber').textContent = `Pregunta ${currentQ + 1} de 15`;
+  document.getElementById('questionText').textContent = q.text;
+
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option' + (answers[currentQ] === i ? ' selected' : '');
+    btn.innerHTML = `
+      <div class="option-indicator"></div>
+      <div class="option-text">${opt.text}</div>
+    `;
+    btn.onclick = () => selectOption(i);
+    container.appendChild(btn);
+  });
+
+  document.getElementById('btnBack').disabled = currentQ === 0;
+  document.getElementById('btnNext').disabled = answers[currentQ] === null;
+  document.getElementById('btnNext').textContent = currentQ === 14 ? 'Ver resultados →' : 'Siguiente →';
+
+  // Re-animate card
+  const card = document.getElementById('questionCard');
+  card.style.animation = 'none';
+  card.offsetHeight;
+  card.style.animation = '';
+}
+
+function selectOption(i) {
+  answers[currentQ] = i;
+  document.querySelectorAll('.option').forEach((btn, idx) => {
+    btn.classList.toggle('selected', idx === i);
+  });
+  document.getElementById('btnNext').disabled = false;
+}
+
+function goNext() {
+  if (answers[currentQ] === null) return;
+  if (currentQ === 14) {
+    showResults();
+    return;
+  }
+  currentQ++;
+  renderQuestion();
+}
+
+function goBack() {
+  if (currentQ === 0) return;
+  currentQ--;
+  renderQuestion();
+}
+
+function computeScores() {
+  const dimScores = [0, 0, 0, 0, 0];
+  const dimMax = [0, 0, 0, 0, 0];
+
+  QUESTIONS.forEach((q, i) => {
+    const d = q.dim;
+    const sel = answers[i] !== null ? answers[i] : 0;
+    dimScores[d] += q.options[sel].score;
+    dimMax[d] += 4;
+  });
+
+  const dimPct = dimScores.map((s, i) => Math.round((s / dimMax[i]) * 100));
+  const total = Math.round(dimPct.reduce((a, b) => a + b, 0) / 5);
+  return { dimScores, dimPct, total };
+}
+
+function showResults() {
+  document.getElementById('quizArea').classList.add('hidden');
+  const res = document.getElementById('resultsArea');
+  res.style.display = 'block';
+
+  const { dimPct, total } = computeScores();
+
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressCount').textContent = '15 / 15';
+
+  document.getElementById('finalScore').textContent = total;
+
+  const level = getLevel(total);
+  const badge = document.getElementById('maturityBadge');
+  badge.textContent = `Madurez ${level.label}`;
+  badge.className = `maturity-level ${level.cls}`;
+  document.getElementById('maturityDesc').textContent = level.desc;
+
+  // Dimension bars
+  const barsContainer = document.getElementById('dimensionBars');
+  barsContainer.innerHTML = '';
+  DIMENSIONS.forEach((dim, i) => {
+    const pct = dimPct[i];
+    const lbl = pct < 35 ? 'Inicial' : pct < 60 ? 'Emergente' : pct < 80 ? 'Estructurado' : 'Avanzado';
+    const row = document.createElement('div');
+    row.className = 'dim-row';
+    row.innerHTML = `
+      <div class="dim-name">${dim.name}</div>
+      <div class="dim-bar-wrap">
+        <div class="dim-bar" id="bar${i}" style="background:${dim.color}"></div>
+      </div>
+      <div class="dim-score">${pct}</div>
+      <div class="dim-label">${lbl}</div>
+    `;
+    barsContainer.appendChild(row);
+  });
+
+  // Animate bars after paint
+  setTimeout(() => {
+    DIMENSIONS.forEach((_, i) => {
+      document.getElementById(`bar${i}`).style.width = `${dimPct[i]}%`;
+    });
+  }, 100);
+
+  // Recommendation
+  const recIdx = total < 31 ? 0 : total < 56 ? 1 : total < 76 ? 2 : 3;
+  const rec = RECS[recIdx];
+  document.getElementById('recTitle').textContent = rec.title;
+  document.getElementById('recBody').textContent = rec.body;
+
+  res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function restartQuiz() {
+  currentQ = 0;
+  answers = new Array(15).fill(null);
+  document.getElementById('resultsArea').style.display = 'none';
+  document.getElementById('quizArea').classList.remove('hidden');
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function buildEmailBody() {
+  const { dimPct, total } = computeScores();
+  const level = getLevel(total);
+  const date = new Date().toLocaleDateString('es-GT', { year: 'numeric', month: 'long', day: 'numeric' });
+
+  let body = `SCORE DE MADUREZ ANALÍTICA · VANTA ANALYTICS\n`;
+  body += `Fecha: ${date}\n`;
+  body += `${'─'.repeat(40)}\n\n`;
+  body += `RESULTADO GENERAL\n`;
+  body += `Score total: ${total} / 100\n`;
+  body += `Nivel: Madurez ${level.label}\n`;
+  body += `${level.desc}\n\n`;
+  body += `${'─'.repeat(40)}\n`;
+  body += `RESULTADO POR DIMENSIÓN\n\n`;
+
+  DIMENSIONS.forEach((dim, i) => {
+    const pct = dimPct[i];
+    const lbl = pct < 35 ? 'Inicial' : pct < 60 ? 'Emergente' : pct < 80 ? 'Estructurado' : 'Avanzado';
+    const bar = '█'.repeat(Math.round(pct / 10)) + '░'.repeat(10 - Math.round(pct / 10));
+    body += `${dim.name}\n${bar}  ${pct}/100 · ${lbl}\n\n`;
+  });
+
+  const recIdx = total < 31 ? 0 : total < 56 ? 1 : total < 76 ? 2 : 3;
+  body += `${'─'.repeat(40)}\n`;
+  body += `SIGUIENTE PASO RECOMENDADO\n`;
+  body += `${RECS[recIdx].title}\n`;
+  body += `${RECS[recIdx].body}\n\n`;
+  body += `${'─'.repeat(40)}\n`;
+  body += `Vanta Analytics · vantaanalytics.com`;
+  return body;
+}
+
+function sendEmail() {
+  const { total } = computeScores();
+  const level = getLevel(total);
+  const subject = `Score de Madurez Analítica · ${level.label} (${total}/100)`;
+  const body = buildEmailBody();
+  const mailto = `mailto:info@vanta-data.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = mailto;
+
+  // Visual feedback
+  const btn = document.querySelector('.btn-email');
+  btn.classList.add('sent');
+  btn.innerHTML = `<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 8l4 4 8-8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Correo abierto`;
+}
+
+function exportPDF() {
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('es-GT', { year: 'numeric', month: 'long', day: 'numeric' });
+  document.getElementById('printDate').textContent = dateStr;
+  const { dimPct } = computeScores();
+  DIMENSIONS.forEach((_, i) => {
+    const bar = document.getElementById('bar' + i);
+    if (bar) { bar.style.transition = 'none'; bar.style.width = dimPct[i] + '%'; }
+  });
+  window.print();
+}
+
+// Init
+renderQuestion();
+</script>
+</body>
+</html>
