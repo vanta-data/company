@@ -5,323 +5,268 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vanta Analytics · Datos & Estrategia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream: #F5F0E8;
-    --ink: #1A1612;
-    --ink-light: #4A4540;
-    --ink-muted: #8A857F;
-    --scout: #B5451B;
-    --scout-light: #F7ECE7;
-    --meridian: #1A527A;
-    --meridian-light: #E6F1FB;
-    --zenith: #2A5F47;
-    --zenith-light: #EAF3E8;
-    --border: rgba(26,22,18,0.12);
+    --midnight:    #070B17;
+    --slate:       #0F172A;
+    --soft-white:  #F3F4F6;
+    --cool-gray:   #94A3B8;
+    --purple:      #7C3AED;
+    --purple-dim:  rgba(124,58,237,0.15);
+    --purple-glow: rgba(124,58,237,0.25);
+    --lime:        #84CC16;
+    --lime-hover:  #65A30D;
+    --cyan:        #38BDF8;
+    --border:      rgba(255,255,255,0.06);
+    --border-md:   rgba(255,255,255,0.10);
+    --scout:       #B5451B;
+    --scout-bg:    rgba(181,69,27,0.12);
+    --meridian:    #1A7AC7;
+    --meridian-bg: rgba(26,122,199,0.12);
+    --zenith:      #2A8F5F;
+    --zenith-bg:   rgba(42,143,95,0.12);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--ink);
-    font-size: 16px;
-    line-height: 1.7;
+    font-family: 'Ubuntu', sans-serif;
+    background: var(--midnight);
+    color: var(--soft-white);
+    font-size: 16px; line-height: 1.7;
     -webkit-font-smoothing: antialiased;
   }
 
   /* NAV */
   nav {
     position: sticky; top: 0; z-index: 100;
-    background: var(--cream);
+    background: rgba(7,11,23,0.88);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
     padding: 0 2rem;
     display: flex; align-items: center; justify-content: space-between;
     height: 64px;
   }
   .nav-logo {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.25rem;
-    color: var(--ink);
-    text-decoration: none;
-    letter-spacing: -0.01em;
+    font-weight: 700; font-size: 1.25rem; letter-spacing: -0.01em;
+    color: var(--soft-white); text-decoration: none;
+    display: flex; align-items: center; gap: 0.5rem;
   }
-  .nav-logo span { color: var(--meridian); }
+  .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); flex-shrink: 0; }
+  .nav-logo span { color: var(--purple); }
   .nav-links { display: flex; gap: 2rem; align-items: center; }
-  .nav-links a {
-    font-size: 0.875rem;
-    color: var(--ink-light);
-    text-decoration: none;
-    font-weight: 400;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--ink); }
+  .nav-links a { font-size: 0.875rem; color: var(--cool-gray); text-decoration: none; font-weight: 400; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--soft-white); }
   .nav-cta {
-    background: var(--ink) !important;
-    color: var(--cream) !important;
-    padding: 0.5rem 1.25rem;
-    border-radius: 4px;
-    font-weight: 500 !important;
-    font-size: 0.875rem !important;
-    transition: opacity 0.2s !important;
+    background: var(--lime) !important; color: #0F1900 !important;
+    padding: 0.5rem 1.25rem; border-radius: 4px;
+    font-weight: 700 !important; font-size: 0.8125rem !important;
+    transition: background 0.2s !important;
   }
-  .nav-cta:hover { opacity: 0.85 !important; }
+  .nav-cta:hover { background: var(--lime-hover) !important; color: #0F1900 !important; }
 
   /* HERO */
   .hero {
-    max-width: 1100px; margin: 0 auto;
+    max-width: 1120px; margin: 0 auto;
     padding: 7rem 2rem 6rem;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
   }
   .hero-eyebrow {
-    font-size: 0.75rem; font-weight: 500;
-    text-transform: uppercase; letter-spacing: 0.12em;
-    color: var(--ink-muted); margin-bottom: 1.25rem;
+    display: inline-flex; align-items: center; gap: 0.625rem;
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 0.75rem; letter-spacing: 0.1em;
+    color: var(--lime); margin-bottom: 1.5rem;
   }
+  .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--lime); }
   h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(2.5rem, 5vw, 3.75rem);
-    line-height: 1.1; letter-spacing: -0.02em;
-    color: var(--ink); margin-bottom: 1.5rem;
+    font-weight: 700; font-size: clamp(2.5rem, 5vw, 3.625rem);
+    line-height: 1.08; letter-spacing: -0.025em;
+    color: var(--soft-white); margin-bottom: 1.5rem;
   }
-  h1 em { font-style: italic; color: var(--meridian); }
+  h1 em { font-style: italic; font-weight: 300; color: var(--purple); }
   .hero-sub {
-    font-size: 1.0625rem; color: var(--ink-light);
-    line-height: 1.75; margin-bottom: 2.5rem;
-    max-width: 44ch;
+    font-size: 1.0625rem; color: var(--cool-gray);
+    line-height: 1.8; margin-bottom: 2.5rem; max-width: 44ch; font-weight: 300;
   }
   .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn-primary {
-    background: var(--ink); color: var(--cream);
-    padding: 0.875rem 2rem; border-radius: 4px;
-    font-size: 0.9375rem; font-weight: 500;
-    text-decoration: none; transition: opacity 0.2s;
-    display: inline-block;
-  }
-  .btn-primary:hover { opacity: 0.85; }
-  .btn-secondary {
-    background: transparent; color: var(--ink);
-    padding: 0.875rem 2rem; border-radius: 4px;
-    border: 1px solid var(--border);
-    font-size: 0.9375rem; font-weight: 400;
-    text-decoration: none; transition: background 0.2s;
-    display: inline-block;
-  }
-  .btn-secondary:hover { background: rgba(26,22,18,0.05); }
 
+  /* BUTTONS */
+  .btn-lime {
+    background: var(--lime); color: #0F1900;
+    padding: 0.875rem 2rem; border-radius: 4px;
+    font-size: 0.9375rem; font-weight: 700;
+    text-decoration: none; transition: background 0.2s;
+    display: inline-block; font-family: 'Ubuntu', sans-serif;
+  }
+  .btn-lime:hover { background: var(--lime-hover); }
+  .btn-ghost {
+    background: transparent; color: var(--soft-white);
+    padding: 0.875rem 2rem; border-radius: 4px;
+    border: 1px solid var(--border-md);
+    font-size: 0.9375rem; font-weight: 400;
+    text-decoration: none; transition: border-color 0.2s, background 0.2s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+
+  /* HERO VISUAL */
   .hero-visual {
-    display: flex; flex-direction: column; gap: 0.75rem;
-    padding: 2rem; background: white;
-    border: 1px solid var(--border); border-radius: 8px;
+    border: 1px solid var(--border); border-radius: 12px;
+    overflow: hidden; background: var(--slate);
   }
-  .stat-row { display: flex; gap: 0.75rem; }
-  .stat-card {
-    flex: 1; padding: 1.25rem 1rem;
-    border-radius: 6px; border: 1px solid var(--border);
+  .tier-card {
+    padding: 1.625rem 1.75rem; border-bottom: 1px solid var(--border);
+    position: relative; overflow: hidden; transition: background 0.2s;
   }
-  .stat-card.s { background: var(--scout-light); border-color: rgba(181,69,27,0.15); }
-  .stat-card.m { background: var(--meridian-light); border-color: rgba(26,82,122,0.15); }
-  .stat-card.z { background: var(--zenith-light); border-color: rgba(42,95,71,0.15); }
-  .stat-card .label {
-    font-size: 0.6875rem; font-weight: 500;
-    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem;
+  .tier-card:last-child { border-bottom: none; }
+  .tier-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
   }
-  .stat-card.s .label { color: var(--scout); }
-  .stat-card.m .label { color: var(--meridian); }
-  .stat-card.z .label { color: var(--zenith); }
-  .stat-card .val { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--ink); }
-  .stat-card .sub { font-size: 0.75rem; color: var(--ink-muted); margin-top: 0.125rem; }
-  .stat-arrow {
-    text-align: center; color: var(--ink-muted); font-size: 1rem;
-    line-height: 1; padding: 0.25rem 0;
+  .tier-card.s::before { background: #E8805A; }
+  .tier-card.m::before { background: #60AADF; }
+  .tier-card.z::before { background: #4DC98A; }
+  .tier-card:hover { background: rgba(255,255,255,0.03); }
+  .tier-label {
+    font-family: 'Ubuntu Mono', monospace; font-size: 0.625rem; letter-spacing: 0.12em;
+    padding: 0.2rem 0.5rem; border-radius: 3px; margin-bottom: 0.75rem; display: inline-block;
   }
+  .tier-card.s .tier-label { background: var(--scout-bg); color: #E8805A; }
+  .tier-card.m .tier-label { background: var(--meridian-bg); color: #60AADF; }
+  .tier-card.z .tier-label { background: var(--zenith-bg); color: #4DC98A; }
+  .tier-row { display: flex; justify-content: space-between; align-items: flex-start; }
+  .tier-name { font-weight: 700; font-size: 1rem; color: var(--soft-white); }
+  .tier-sub { font-size: 0.8125rem; color: var(--cool-gray); margin-top: 0.125rem; font-weight: 300; }
+  .tier-price { font-family: 'Ubuntu Mono', monospace; font-size: 1.125rem; color: var(--soft-white); text-align: right; }
+  .tier-price .freq { font-size: 0.75rem; color: var(--cool-gray); display: block; margin-top: 0.125rem; }
 
   /* SECTION */
   section { padding: 5rem 2rem; }
-  .section-inner { max-width: 1100px; margin: 0 auto; }
-  .section-label {
-    font-size: 0.75rem; font-weight: 500;
-    text-transform: uppercase; letter-spacing: 0.12em;
-    color: var(--ink-muted); margin-bottom: 0.75rem;
+  .section-inner { max-width: 1120px; margin: 0 auto; }
+  .section-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: 'Ubuntu Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em;
+    color: var(--purple); margin-bottom: 0.875rem;
   }
+  .section-eyebrow::before { content: ''; width: 16px; height: 1px; background: var(--purple); }
   h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(1.75rem, 3.5vw, 2.625rem);
+    font-weight: 700; font-size: clamp(1.75rem, 3.5vw, 2.5rem);
     letter-spacing: -0.02em; line-height: 1.15;
-    color: var(--ink); margin-bottom: 1.25rem;
+    color: var(--soft-white); margin-bottom: 1rem;
   }
-  h2 em { font-style: italic; }
+  h2 em { font-style: italic; font-weight: 300; color: var(--purple); }
   .section-intro {
-    font-size: 1.0625rem; color: var(--ink-light);
-    max-width: 60ch; line-height: 1.75; margin-bottom: 3.5rem;
+    font-size: 1.0625rem; color: var(--cool-gray);
+    max-width: 58ch; line-height: 1.8; margin-bottom: 3.5rem; font-weight: 300;
   }
 
   /* SERVICES */
-  #servicios { background: white; }
-  .service-grid { display: flex; flex-direction: column; gap: 1.5rem; }
-  .service-card {
-    border: 1px solid var(--border); border-radius: 8px;
-    overflow: hidden; background: var(--cream);
-  }
+  #servicios { background: var(--midnight); }
+  .service-grid { display: flex; flex-direction: column; gap: 1px; background: var(--border); border-radius: 12px; overflow: hidden; }
+  .service-card { background: var(--midnight); }
   .service-header {
-    display: grid; grid-template-columns: 1fr auto;
-    gap: 1rem; align-items: start;
-    padding: 2rem 2rem 1.5rem;
-    border-bottom: 1px solid var(--border);
+    display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: start;
+    padding: 2.25rem 2.25rem 2rem; border-bottom: 1px solid var(--border);
   }
   .service-tag {
-    display: inline-block; font-size: 0.6875rem;
-    font-weight: 500; text-transform: uppercase;
-    letter-spacing: 0.1em; padding: 0.25rem 0.625rem;
-    border-radius: 3px; margin-bottom: 0.625rem;
+    display: inline-block; font-family: 'Ubuntu Mono', monospace;
+    font-size: 0.625rem; letter-spacing: 0.12em;
+    padding: 0.25rem 0.625rem; border-radius: 3px; margin-bottom: 0.75rem;
   }
-  .tag-scout { background: var(--scout-light); color: var(--scout); }
-  .tag-meridian { background: var(--meridian-light); color: var(--meridian); }
-  .tag-zenith { background: var(--zenith-light); color: var(--zenith); }
+  .tag-scout    { background: var(--scout-bg);    color: #E8805A; }
+  .tag-meridian { background: var(--meridian-bg); color: #60AADF; }
+  .tag-zenith   { background: var(--zenith-bg);   color: #4DC98A; }
   .service-name {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.625rem; letter-spacing: -0.01em;
-    color: var(--ink); margin-bottom: 0.5rem;
+    font-weight: 700; font-size: 1.75rem; letter-spacing: -0.02em;
+    color: var(--soft-white); margin-bottom: 0.5rem;
   }
-  .service-desc { font-size: 0.9375rem; color: var(--ink-light); max-width: 50ch; }
+  .service-desc { font-size: 0.9375rem; color: var(--cool-gray); max-width: 52ch; line-height: 1.7; font-weight: 300; }
   .service-price { text-align: right; }
-  .price-main { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--ink); }
-  .price-gtq { font-size: 0.8125rem; color: var(--ink-muted); margin-top: 0.125rem; }
-  .price-type { font-size: 0.75rem; color: var(--ink-muted); margin-top: 0.25rem; font-style: italic; }
-  .service-body {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 0; 
-  }
-  .service-col {
-    padding: 1.75rem 2rem;
-  }
-  .service-col + .service-col {
-    border-left: 1px solid var(--border);
-    background: white;
-  }
+  .price-main { font-family: 'Ubuntu Mono', monospace; font-size: 2.25rem; color: var(--soft-white); line-height: 1; }
+  .price-gtq { font-size: 0.8125rem; color: var(--cool-gray); margin-top: 0.25rem; font-family: 'Ubuntu Mono', monospace; }
+  .price-type { font-size: 0.75rem; color: var(--cool-gray); margin-top: 0.375rem; font-weight: 300; }
+  .service-body { display: grid; grid-template-columns: 1fr 1fr; }
+  .service-col { padding: 2rem 2.25rem; }
+  .service-col + .service-col { border-left: 1px solid var(--border); background: var(--slate); }
   .service-col h4 {
-    font-size: 0.6875rem; font-weight: 500;
-    text-transform: uppercase; letter-spacing: 0.1em;
-    color: var(--ink-muted); margin-bottom: 1rem;
+    font-family: 'Ubuntu Mono', monospace; font-size: 0.6875rem; letter-spacing: 0.1em;
+    color: var(--cool-gray); margin-bottom: 1.25rem; text-transform: uppercase;
   }
-  .service-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.625rem; }
+  .service-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
   .service-col ul li {
-    font-size: 0.9375rem; color: var(--ink-light);
-    padding-left: 1.25rem; position: relative; line-height: 1.5;
+    font-size: 0.9375rem; color: var(--cool-gray);
+    padding-left: 1.25rem; position: relative; line-height: 1.55; font-weight: 300;
   }
-  .service-col ul li::before {
-    content: '→'; position: absolute; left: 0;
-    color: var(--ink-muted); font-size: 0.75rem; top: 0.25rem;
-  }
+  .service-col ul li::before { content: '→'; position: absolute; left: 0; color: var(--purple); font-size: 0.8rem; top: 0.25rem; }
+  .service-col ul li strong { color: var(--soft-white); font-weight: 500; }
   .service-insight {
-    padding: 1.25rem 2rem;
-    background: var(--ink); color: var(--cream);
-    font-size: 0.875rem; line-height: 1.65;
+    padding: 1.25rem 2.25rem; font-size: 0.875rem; line-height: 1.7;
+    border-top: 1px solid var(--border);
+    color: var(--cool-gray); font-weight: 300;
+    background: rgba(124,58,237,0.05);
+    border-left: 3px solid var(--purple);
   }
-  .service-insight strong { font-weight: 500; }
-
-  /* Addon */
+  .service-insight strong { color: var(--soft-white); font-weight: 500; }
   .addon-strip {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 1rem 2rem; background: var(--meridian-light);
-    border-top: 1px solid rgba(26,82,122,0.15);
-    gap: 1rem; flex-wrap: wrap;
+    padding: 1rem 2.25rem; gap: 1rem; flex-wrap: wrap;
+    border-top: 1px solid var(--border);
+    background: var(--meridian-bg);
   }
-  .addon-strip p { font-size: 0.875rem; color: var(--meridian); }
-  .addon-strip .addon-price {
-    font-family: 'DM Serif Display', serif; font-size: 1.125rem;
-    color: var(--meridian); white-space: nowrap;
-  }
+  .addon-strip p { font-size: 0.875rem; color: #60AADF; font-weight: 300; }
+  .addon-strip strong { font-weight: 500; }
+  .addon-price { font-family: 'Ubuntu Mono', monospace; font-size: 1.125rem; color: #60AADF; white-space: nowrap; }
 
   /* FUNNEL */
-  #embudo { background: var(--cream); }
-  .funnel-grid {
-    display: grid; grid-template-columns: 1fr 1fr 1fr;
-    gap: 1.5rem; margin-bottom: 3rem;
-  }
-  .funnel-step {
-    padding: 2rem 1.75rem; border: 1px solid var(--border);
-    border-radius: 8px; background: white; position: relative;
-  }
-  .funnel-step::after {
-    content: '→'; position: absolute; right: -1.1rem; top: 50%;
-    transform: translateY(-50%); color: var(--ink-muted);
-    font-size: 1.25rem; z-index: 1;
-  }
+  #embudo { background: var(--slate); }
+  .funnel-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 3rem; }
+  .funnel-step { background: var(--midnight); padding: 2.25rem 2rem; position: relative; }
+  .funnel-step::after { content: '→'; position: absolute; right: -0.85rem; top: 50%; transform: translateY(-50%); color: var(--purple); font-size: 1rem; z-index: 1; }
   .funnel-step:last-child::after { display: none; }
-  .funnel-num {
-    font-family: 'DM Serif Display', serif; font-size: 2.5rem;
-    line-height: 1; margin-bottom: 0.75rem;
-  }
-  .funnel-step:nth-child(1) .funnel-num { color: var(--scout); }
-  .funnel-step:nth-child(2) .funnel-num { color: var(--meridian); }
-  .funnel-step:nth-child(3) .funnel-num { color: var(--zenith); }
-  .funnel-title { font-size: 1.0625rem; font-weight: 500; margin-bottom: 0.375rem; }
-  .funnel-sub { font-size: 0.875rem; color: var(--ink-muted); }
+  .funnel-num { font-family: 'Ubuntu Mono', monospace; font-size: 2.375rem; line-height: 1; margin-bottom: 0.875rem; }
+  .funnel-step:nth-child(1) .funnel-num { color: #E8805A; }
+  .funnel-step:nth-child(2) .funnel-num { color: #60AADF; }
+  .funnel-step:nth-child(3) .funnel-num { color: #4DC98A; }
+  .funnel-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.375rem; color: var(--soft-white); }
+  .funnel-sub { font-size: 0.875rem; color: var(--cool-gray); font-weight: 300; line-height: 1.6; }
+  .projection-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: 12px; overflow: hidden; }
+  .proj-card { padding: 2.25rem; background: var(--midnight); }
+  .proj-card h3 { font-family: 'Ubuntu Mono', monospace; font-size: 0.6875rem; letter-spacing: 0.1em; color: var(--cool-gray); margin-bottom: 1.5rem; text-transform: uppercase; }
+  .proj-line { display: flex; justify-content: space-between; align-items: baseline; padding: 0.625rem 0; border-bottom: 1px solid var(--border); font-size: 0.9375rem; }
+  .proj-line:last-of-type { border-bottom: none; }
+  .proj-label { color: var(--cool-gray); font-weight: 300; }
+  .proj-val { font-family: 'Ubuntu Mono', monospace; color: var(--soft-white); }
+  .proj-total { font-family: 'Ubuntu Mono', monospace; font-size: 2.25rem; color: var(--lime); margin-top: 1.25rem; line-height: 1; }
+  .proj-total-label { font-size: 0.8125rem; color: var(--cool-gray); margin-top: 0.375rem; font-weight: 300; }
 
-  .projection-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  .proj-card {
-    padding: 2rem; border: 1px solid var(--border);
-    border-radius: 8px; background: white;
+  /* CTA */
+  #contacto { background: var(--midnight); }
+  .cta-block {
+    border: 1px solid var(--border); border-radius: 12px;
+    background: var(--slate); padding: 4rem; text-align: center; position: relative; overflow: hidden;
   }
-  .proj-card h3 {
-    font-size: 0.6875rem; font-weight: 500;
-    text-transform: uppercase; letter-spacing: 0.1em;
-    color: var(--ink-muted); margin-bottom: 1.25rem;
+  .cta-block::before {
+    content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+    width: 500px; height: 500px; border-radius: 50%;
+    background: var(--purple-glow); filter: blur(90px); pointer-events: none;
   }
-  .proj-line {
-    display: flex; justify-content: space-between;
-    align-items: baseline; padding: 0.5rem 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.9375rem;
-  }
-  .proj-line:last-child { border-bottom: none; }
-  .proj-line .proj-label { color: var(--ink-light); }
-  .proj-line .proj-val { font-weight: 500; color: var(--ink); }
-  .proj-total {
-    font-family: 'DM Serif Display', serif;
-    font-size: 2rem; color: var(--ink);
-    margin-top: 1rem;
-  }
-  .proj-total-label { font-size: 0.875rem; color: var(--ink-muted); }
-
-  /* CTA SECTION */
-  #contacto {
-    background: var(--ink); color: var(--cream);
-    text-align: center;
-  }
-  #contacto h2 { color: var(--cream); margin-bottom: 1rem; }
-  #contacto .section-intro { color: rgba(245,240,232,0.7); margin-left: auto; margin-right: auto; }
+  .cta-block > * { position: relative; z-index: 1; }
+  .cta-block .section-eyebrow { justify-content: center; margin-bottom: 1rem; }
+  .cta-block .section-intro { margin-left: auto; margin-right: auto; margin-bottom: 0; }
   .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2.5rem; }
-  .btn-cream {
-    background: var(--cream); color: var(--ink);
-    padding: 0.875rem 2rem; border-radius: 4px;
-    font-size: 0.9375rem; font-weight: 500;
-    text-decoration: none; transition: opacity 0.2s; display: inline-block;
-  }
-  .btn-cream:hover { opacity: 0.9; }
-  .btn-ghost {
-    background: transparent; color: var(--cream);
-    padding: 0.875rem 2rem; border-radius: 4px;
-    border: 1px solid rgba(245,240,232,0.3);
-    font-size: 0.9375rem; font-weight: 400;
-    text-decoration: none; transition: background 0.2s; display: inline-block;
-  }
-  .btn-ghost:hover { background: rgba(245,240,232,0.08); }
 
   /* FOOTER */
-  footer {
-    padding: 2rem; border-top: 1px solid var(--border);
+  .footer-wrap {
+    max-width: 1120px; margin: 0 auto; padding: 2rem;
+    border-top: 1px solid var(--border);
     display: flex; justify-content: space-between; align-items: center;
-    font-size: 0.8125rem; color: var(--ink-muted);
-    max-width: 1100px; margin: 0 auto;
+    font-size: 0.8125rem; color: var(--cool-gray);
     flex-wrap: wrap; gap: 0.5rem;
   }
-  .footer-logo { font-family: 'DM Serif Display', serif; color: var(--ink); }
+  .footer-logo { font-weight: 700; color: var(--soft-white); }
+  .footer-mono { font-family: 'Ubuntu Mono', monospace; color: var(--purple); }
 
   /* DIVIDER */
-  .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+  .divider { border: none; border-top: 1px solid var(--border); }
 
   /* RESPONSIVE */
   @media (max-width: 768px) {
@@ -334,24 +279,27 @@
     .funnel-grid { grid-template-columns: 1fr; }
     .funnel-step::after { display: none; }
     .projection-grid { grid-template-columns: 1fr; }
-    nav { padding: 0 1.5rem; }
+    nav { padding: 0 1.25rem; }
     .nav-links { gap: 1rem; }
-    section { padding: 3.5rem 1.5rem; }
+    section { padding: 3.5rem 1.25rem; }
+    .cta-block { padding: 2.5rem 1.5rem; }
   }
 
-  /* ANIMATIONS */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
   .hero-content { animation: fadeUp 0.6s ease both; }
-  .hero-visual { animation: fadeUp 0.6s ease 0.15s both; }
+  .hero-visual  { animation: fadeUp 0.6s ease 0.15s both; }
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="#" class="nav-logo">Vanta <span>Analytics</span></a>
+  <a href="#" class="nav-logo">
+    <span class="nav-dot"></span>
+    Vanta <span>Analytics</span>
+  </a>
   <div class="nav-links">
     <a href="#servicios">Servicios</a>
     <a href="#embudo">Proyección</a>
@@ -362,36 +310,43 @@
 <!-- HERO -->
 <div class="hero">
   <div class="hero-content">
-    <p class="hero-eyebrow">Guatemala · Datos & Estrategia</p>
+    <p class="hero-eyebrow">Guatemala · Datos &amp; Estrategia</p>
     <h1>Sus datos ya <em>existen.</em><br>Empiece a usarlos.</h1>
     <p class="hero-sub">Convertimos los datos que su negocio ya genera en decisiones claras, dashboards accionables y ventaja competitiva — sin necesidad de contratar un equipo de datos interno.</p>
     <div class="hero-actions">
-      <a href="cuestionario.html" class="btn-primary">Evalúe su madurez analítica</a>
-      <a href="#servicios" class="btn-secondary">Ver servicios</a>
+      <a href="cuestionario.html" class="btn-lime">Evalúe su madurez analítica</a>
+      <a href="#servicios" class="btn-ghost">Ver servicios</a>
     </div>
   </div>
   <div class="hero-visual">
-    <div class="stat-row">
-      <div class="stat-card s">
-        <div class="label">Scout</div>
-        <div class="val">$250</div>
-        <div class="sub">Diagnóstico · 24h</div>
+    <div class="tier-card s">
+      <span class="tier-label">SERVICIO 01</span>
+      <div class="tier-row">
+        <div>
+          <div class="tier-name">Scout</div>
+          <div class="tier-sub">Diagnóstico · Quick Win · 24h</div>
+        </div>
+        <div class="tier-price">$250<span class="freq">sesión única</span></div>
       </div>
     </div>
-    <div class="stat-arrow">↓</div>
-    <div class="stat-row">
-      <div class="stat-card m">
-        <div class="label">Meridian</div>
-        <div class="val">$2,500</div>
-        <div class="sub">BI completo · 8 semanas</div>
+    <div class="tier-card m">
+      <span class="tier-label">SERVICIO 02</span>
+      <div class="tier-row">
+        <div>
+          <div class="tier-name">Meridian</div>
+          <div class="tier-sub">Implementación BI · 8 semanas</div>
+        </div>
+        <div class="tier-price">$2,500<span class="freq">proyecto fijo</span></div>
       </div>
     </div>
-    <div class="stat-arrow">↓</div>
-    <div class="stat-row">
-      <div class="stat-card z">
-        <div class="label">Zenith</div>
-        <div class="val">$600<span style="font-size:1rem; font-family:'DM Sans',sans-serif; font-weight:300">/mes</span></div>
-        <div class="sub">CDO Externo · Retainer</div>
+    <div class="tier-card z">
+      <span class="tier-label">SERVICIO 03</span>
+      <div class="tier-row">
+        <div>
+          <div class="tier-name">Zenith</div>
+          <div class="tier-sub">CDO Externo · Retainer mensual</div>
+        </div>
+        <div class="tier-price">$600<span class="freq">/mes</span></div>
       </div>
     </div>
   </div>
@@ -402,7 +357,7 @@
 <!-- SERVICIOS -->
 <section id="servicios">
   <div class="section-inner">
-    <p class="section-label">Servicios</p>
+    <p class="section-eyebrow">Servicios</p>
     <h2>Tres niveles.<br>Una sola <em>dirección.</em></h2>
     <p class="section-intro">Cada servicio prepara el terreno para el siguiente — de diagnóstico a implementación a dirección estratégica continua.</p>
 
@@ -412,7 +367,7 @@
       <div class="service-card">
         <div class="service-header">
           <div>
-            <span class="service-tag tag-scout">Servicio 01</span>
+            <span class="service-tag tag-scout">SERVICIO 01</span>
             <div class="service-name">Scout</div>
             <p class="service-desc">Una sesión de diagnóstico que revela exactamente dónde están las oportunidades de datos en su negocio — y entrega un prototipo real con sus tres métricas más críticas, listo en 24 horas.</p>
           </div>
@@ -434,7 +389,7 @@
             </ul>
           </div>
           <div class="service-col">
-            <h4>Quick win incluido — Reporte MVP</h4>
+            <h4>Quick Win incluido — Reporte MVP</h4>
             <ul>
               <li>Reporte ejecutivo de 1 página con las 3 métricas más críticas del negocio</li>
               <li>Fuente: archivo Excel o CSV existente del cliente</li>
@@ -444,7 +399,7 @@
           </div>
         </div>
         <div class="service-insight">
-          <strong>Por qué funciona:</strong> Scout no es solo un diagnóstico — el prototipo entregado en vivo transforma la conversación: en lugar de convencer al dueño de que los datos son importantes, le mostramos sus propios números funcionando.
+          <strong>Por qué funciona:</strong> Scout no es solo un diagnóstico — el prototipo entregado en vivo transforma la conversación. En lugar de convencer al dueño de que los datos son importantes, le mostramos sus propios números funcionando.
         </div>
       </div>
 
@@ -452,7 +407,7 @@
       <div class="service-card">
         <div class="service-header">
           <div>
-            <span class="service-tag tag-meridian">Servicio 02</span>
+            <span class="service-tag tag-meridian">SERVICIO 02</span>
             <div class="service-name">Meridian</div>
             <p class="service-desc">Un sistema de inteligencia de negocio completo y calibrado a su industria, implementado en 8 semanas. Conecta sus fuentes de datos, construye los dashboards que realmente necesita y capacita a su equipo para usarlos.</p>
           </div>
@@ -489,7 +444,7 @@
           <div class="addon-price">$150/mes</div>
         </div>
         <div class="service-insight">
-          <strong>La clave:</strong> "Calibrado a su industria" justifica el precio sobre freelancers. Un dueño de restaurante siente inmediatamente la diferencia entre un dashboard genérico y uno que habla de merma, turnos y delivery.
+          <strong>La clave:</strong> "Calibrado a su industria" justifica el precio sobre freelancers. Un dueño de restaurante siente la diferencia entre un dashboard genérico y uno que habla de merma, turnos y delivery.
         </div>
       </div>
 
@@ -497,12 +452,12 @@
       <div class="service-card">
         <div class="service-header">
           <div>
-            <span class="service-tag tag-zenith">Servicio 03</span>
+            <span class="service-tag tag-zenith">SERVICIO 03</span>
             <div class="service-name">Zenith</div>
             <p class="service-desc">Vanta Analytics actúa como el Chief Data Officer externo del negocio. No solo mantiene el sistema — lo evoluciona y convierte los datos en decisiones estratégicas mes a mes, sin el costo de contratar un equipo interno.</p>
           </div>
           <div class="service-price">
-            <div class="price-main">$600<span style="font-size:1.25rem; font-weight:300; font-family:'DM Sans',sans-serif">/mes</span></div>
+            <div class="price-main">$600<span style="font-size:1.25rem; font-weight:300; font-family:'Ubuntu',sans-serif">/mes</span></div>
             <div class="price-gtq">~Q4,758 GTQ</div>
             <div class="price-type">Mínimo 6 meses</div>
           </div>
@@ -543,7 +498,7 @@
 <!-- EMBUDO Y PROYECCIÓN -->
 <section id="embudo">
   <div class="section-inner">
-    <p class="section-label">Proyección</p>
+    <p class="section-eyebrow">Proyección</p>
     <h2>Un embudo diseñado<br>para <em>escalar.</em></h2>
     <p class="section-intro">Scout califica prospectos. Meridian construye el sistema. Zenith genera ingresos predecibles. Cada nivel alimenta el siguiente.</p>
 
@@ -551,57 +506,38 @@
       <div class="funnel-step">
         <div class="funnel-num">$250</div>
         <div class="funnel-title">Scout</div>
-        <div class="funnel-sub">Diagnóstico · El cliente paga por ser calificado · Meta: 4/mes</div>
+        <div class="funnel-sub">El cliente paga por ser calificado.<br>Meta: 4 por mes.</div>
       </div>
       <div class="funnel-step">
         <div class="funnel-num">$2,500</div>
         <div class="funnel-title">Meridian</div>
-        <div class="funnel-sub">Implementación BI · 8 semanas · Meta: 2 proyectos/mes</div>
+        <div class="funnel-sub">Implementación BI completa.<br>Meta: 2 proyectos por mes.</div>
       </div>
       <div class="funnel-step">
         <div class="funnel-num">$600</div>
         <div class="funnel-title">Zenith</div>
-        <div class="funnel-sub">Retainer mensual · Ingresos predecibles · Meta: 8 clientes</div>
+        <div class="funnel-sub">Retainer mensual predecible.<br>Meta: 8 clientes activos.</div>
       </div>
     </div>
 
     <div class="projection-grid">
       <div class="proj-card">
         <h3>Proyección conservadora</h3>
-        <div class="proj-line">
-          <span class="proj-label">Scout ×2</span>
-          <span class="proj-val">$500</span>
-        </div>
-        <div class="proj-line">
-          <span class="proj-label">Meridian ×1</span>
-          <span class="proj-val">$2,500</span>
-        </div>
-        <div class="proj-line">
-          <span class="proj-label">Zenith ×4</span>
-          <span class="proj-val">$2,400</span>
-        </div>
+        <div class="proj-line"><span class="proj-label">Scout ×2</span><span class="proj-val">$500</span></div>
+        <div class="proj-line"><span class="proj-label">Meridian ×1</span><span class="proj-val">$2,500</span></div>
+        <div class="proj-line"><span class="proj-label">Zenith ×4</span><span class="proj-val">$2,400</span></div>
         <div class="proj-total">~$5,400</div>
         <div class="proj-total-label">ingresos mensuales</div>
       </div>
       <div class="proj-card">
         <h3>Proyección escalada</h3>
-        <div class="proj-line">
-          <span class="proj-label">Meridian ×2</span>
-          <span class="proj-val">$5,000</span>
-        </div>
-        <div class="proj-line">
-          <span class="proj-label">Zenith ×8</span>
-          <span class="proj-val">$4,800</span>
-        </div>
-        <div class="proj-line">
-          <span class="proj-label">Meridian Care</span>
-          <span class="proj-val">+variable</span>
-        </div>
+        <div class="proj-line"><span class="proj-label">Meridian ×2</span><span class="proj-val">$5,000</span></div>
+        <div class="proj-line"><span class="proj-label">Zenith ×8</span><span class="proj-val">$4,800</span></div>
+        <div class="proj-line"><span class="proj-label">Meridian Care</span><span class="proj-val">+variable</span></div>
         <div class="proj-total">~$9,800</div>
         <div class="proj-total-label">ingresos mensuales combinados</div>
       </div>
     </div>
-
   </div>
 </section>
 
@@ -610,20 +546,24 @@
 <!-- CTA -->
 <section id="contacto">
   <div class="section-inner">
-    <p class="section-label" style="color: rgba(245,240,232,0.4);">Empecemos</p>
-    <h2>¿Listo para ver<br><em>sus propios números</em> funcionando?</h2>
-    <p class="section-intro">Empiece con el cuestionario de madurez analítica — le toma 5 minutos y le dice exactamente en qué punto está su negocio y cuál es el mejor primer paso.</p>
-    <div class="cta-actions">
-      <a href="cuestionario.html" class="btn-cream">Evalúe su negocio gratis →</a>
-      <a href="https://wa.me/50200000000" class="btn-ghost" target="_blank">Hablar por WhatsApp</a>
+    <div class="cta-block">
+      <p class="section-eyebrow">Empecemos</p>
+      <h2>¿Listo para ver<br><em>sus propios números</em> funcionando?</h2>
+      <p class="section-intro">Empiece con el cuestionario de madurez analítica — le toma 5 minutos y le dice exactamente en qué punto está su negocio y cuál es el mejor primer paso.</p>
+      <div class="cta-actions">
+        <a href="cuestionario.html" class="btn-lime">Evalúe su negocio gratis →</a>
+        <a href="https://wa.me/50200000000" class="btn-ghost" target="_blank">Hablar por WhatsApp</a>
+      </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <span class="footer-logo">Vanta Analytics</span>
-  <span>Guatemala · 2026</span>
-  <span>Datos &amp; Estrategia</span>
+  <div class="footer-wrap">
+    <span class="footer-logo">Vanta Analytics</span>
+    <span>Guatemala · 2026</span>
+    <span class="footer-mono">vantaanalytics.com</span>
+  </div>
 </footer>
 
 </body>
