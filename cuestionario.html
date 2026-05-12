@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Score de Madurez Analítica · Vanta Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --ink: #1A1612;
+    --ink-light: #4A4540;
+    --ink-muted: #8A857F;
+    --scout: #B5451B;
+    --scout-light: #F7ECE7;
+    --meridian: #1A527A;
+    --meridian-light: #E6F1FB;
+    --zenith: #2A5F47;
+    --zenith-light: #EAF3E8;
+    --border: rgba(26,22,18,0.12);
+    --progress-bg: rgba(26,22,18,0.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  nav {
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif; font-size: 1.25rem;
+    color: var(--ink); text-decoration: none; letter-spacing: -0.01em;
+  }
+  .nav-logo span { color: var(--meridian); }
+  .nav-back {
+    font-size: 0.875rem; color: var(--ink-muted);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--ink); }
+
+  .quiz-wrap {
+    max-width: 720px; margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+  }
+
+  .quiz-header { margin-bottom: 3rem; }
+  .quiz-eyebrow {
+    font-size: 0.75rem; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--ink-muted); margin-bottom: 0.75rem;
+  }
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    letter-spacing: -0.02em; line-height: 1.15;
+    margin-bottom: 0.875rem;
+  }
+  h1 em { font-style: italic; color: var(--meridian); }
+  .quiz-intro {
+    font-size: 1rem; color: var(--ink-light);
+    max-width: 52ch; line-height: 1.75;
+  }
+
+  /* PROGRESS */
+  .progress-bar-wrap {
+    margin-bottom: 2.5rem;
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .progress-meta {
+    display: flex; justify-content: space-between;
+    font-size: 0.8125rem; color: var(--ink-muted);
+  }
+  .progress-track {
+    height: 3px; background: var(--progress-bg);
+    border-radius: 99px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: var(--ink);
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+
+  /* QUESTION */
+  .question-block {
+    display: none;
+    animation: fadeIn 0.3s ease both;
+  }
+  .question-block.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .dimension-tag {
+    display: inline-block; font-size: 0.6875rem;
+    font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.1em; padding: 0.25rem 0.625rem;
+    border-radius: 3px; margin-bottom: 1rem;
+    background: var(--meridian-light); color: var(--meridian);
+  }
+  .question-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.375rem; line-height: 1.35;
+    color: var(--ink); margin-bottom: 0.625rem;
+  }
+  .question-sub {
+    font-size: 0.9rem; color: var(--ink-muted);
+    margin-bottom: 2rem; line-height: 1.6;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 0.625rem; }
+  .option {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1.125rem 1.25rem;
+    border: 1px solid var(--border); border-radius: 6px;
+    background: white; cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    text-align: left;
+  }
+  .option:hover { border-color: rgba(26,22,18,0.3); background: rgba(255,255,255,0.8); }
+  .option.selected {
+    border-color: var(--ink); background: var(--ink);
+    color: var(--cream);
+  }
+  .option-score {
+    flex-shrink: 0; width: 28px; height: 28px;
+    border-radius: 50%; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 500; color: var(--ink-muted);
+    transition: all 0.15s;
+  }
+  .option.selected .option-score {
+    background: white; color: var(--ink); border-color: transparent;
+  }
+  .option-text { font-size: 0.9375rem; line-height: 1.55; padding-top: 3px; }
+  .option-sub { font-size: 0.8125rem; color: var(--ink-muted); margin-top: 0.125rem; }
+  .option.selected .option-sub { color: rgba(245,240,232,0.6); }
+
+  /* NAV BUTTONS */
+  .quiz-nav {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-top: 2.5rem;
+    padding-top: 1.5rem; border-top: 1px solid var(--border);
+  }
+  .btn { cursor: pointer; border: none; font-family: inherit; }
+  .btn-back {
+    background: transparent; color: var(--ink-muted);
+    font-size: 0.9rem; padding: 0.75rem 1.25rem;
+    border-radius: 4px; border: 1px solid var(--border);
+    transition: all 0.15s;
+  }
+  .btn-back:hover { color: var(--ink); border-color: rgba(26,22,18,0.3); }
+  .btn-next {
+    background: var(--ink); color: var(--cream);
+    font-size: 0.9375rem; font-weight: 500;
+    padding: 0.875rem 1.75rem; border-radius: 4px;
+    transition: opacity 0.2s; opacity: 0.4; cursor: not-allowed;
+  }
+  .btn-next.enabled { opacity: 1; cursor: pointer; }
+  .btn-next.enabled:hover { opacity: 0.85; }
+
+  /* RESULTS */
+  #result-screen { display: none; }
+  #result-screen.visible { display: block; animation: fadeIn 0.4s ease; }
+  .result-score-row {
+    display: flex; align-items: baseline; gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .result-score-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 4rem; line-height: 1; color: var(--ink);
+  }
+  .result-score-max { font-size: 1.125rem; color: var(--ink-muted); }
+  .result-tier {
+    display: inline-block; padding: 0.375rem 0.875rem;
+    border-radius: 4px; font-weight: 500; font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+  .tier-scout { background: var(--scout-light); color: var(--scout); }
+  .tier-meridian { background: var(--meridian-light); color: var(--meridian); }
+  .tier-zenith { background: var(--zenith-light); color: var(--zenith); }
+  .result-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.75rem; line-height: 1.25;
+    color: var(--ink); margin-bottom: 0.75rem;
+  }
+  .result-desc {
+    font-size: 1rem; color: var(--ink-light);
+    line-height: 1.75; margin-bottom: 2.5rem; max-width: 56ch;
+  }
+
+  /* Dimension breakdown */
+  .dim-grid { display: flex; flex-direction: column; gap: 0.625rem; margin-bottom: 3rem; }
+  .dim-row { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.25rem; }
+  .dim-row-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+  .dim-name { font-size: 0.875rem; font-weight: 500; color: var(--ink); }
+  .dim-score { font-size: 0.875rem; color: var(--ink-muted); }
+  .dim-track { height: 4px; background: var(--progress-bg); border-radius: 99px; overflow: hidden; }
+  .dim-fill { height: 100%; border-radius: 99px; }
+  .fill-low { background: var(--scout); }
+  .fill-mid { background: var(--meridian); }
+  .fill-high { background: var(--zenith); }
+
+  /* Recommendation card */
+  .rec-card {
+    border: 1px solid var(--border); border-radius: 8px;
+    overflow: hidden; margin-bottom: 1.5rem;
+  }
+  .rec-header {
+    padding: 1.5rem 1.75rem; background: var(--ink); color: var(--cream);
+  }
+  .rec-header .tag {
+    font-size: 0.6875rem; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    opacity: 0.5; margin-bottom: 0.5rem;
+  }
+  .rec-header .rec-name {
+    font-family: 'DM Serif Display', serif; font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+  .rec-header .rec-price { font-size: 0.9375rem; opacity: 0.7; }
+  .rec-body { padding: 1.5rem 1.75rem; background: white; }
+  .rec-body p { font-size: 0.9375rem; color: var(--ink-light); line-height: 1.7; }
+  .result-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+  .btn-primary {
+    background: var(--ink); color: var(--cream);
+    padding: 0.875rem 2rem; border-radius: 4px;
+    font-size: 0.9375rem; font-weight: 500;
+    text-decoration: none; transition: opacity 0.2s; display: inline-block;
+    border: none; cursor: pointer; font-family: inherit;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-secondary {
+    background: transparent; color: var(--ink);
+    padding: 0.875rem 2rem; border-radius: 4px;
+    border: 1px solid var(--border);
+    font-size: 0.9375rem;
+    text-decoration: none; transition: background 0.2s; display: inline-block;
+  }
+  .btn-secondary:hover { background: rgba(26,22,18,0.05); }
+
+  @media (max-width: 600px) {
+    .quiz-wrap { padding: 2.5rem 1.25rem 4rem; }
+    nav { padding: 0 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Vanta <span>Analytics</span></a>
+  <a href="index.html" class="nav-back">← Volver al inicio</a>
+</nav>
+
+<div class="quiz-wrap">
+
+  <!-- QUIZ HEADER -->
+  <div class="quiz-header" id="quiz-header">
+    <p class="quiz-eyebrow">Evaluación gratuita</p>
+    <h1>Score de <em>Madurez Analítica</em></h1>
+    <p class="quiz-intro">15 preguntas en 5 dimensiones clave. Al final, sabrá exactamente en qué punto está su negocio con los datos — y cuál es el primer paso correcto.</p>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar-wrap" id="progress-wrap">
+    <div class="progress-meta">
+      <span id="prog-label">Pregunta 1 de 15</span>
+      <span id="prog-pct">0%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div id="questions-container"></div>
+
+  <!-- NAVIGATION -->
+  <div class="quiz-nav" id="quiz-nav">
+    <button class="btn btn-back" id="btn-back" onclick="prevQ()" style="visibility:hidden">← Anterior</button>
+    <button class="btn btn-next" id="btn-next" onclick="nextQ()">Siguiente →</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="result-screen">
+    <div id="result-content"></div>
+  </div>
+
+</div>
+
+<script>
+const DIMS = [
+  { id: 'captura', name: 'Captura de datos' },
+  { id: 'almacen', name: 'Almacenamiento' },
+  { id: 'analisis', name: 'Análisis y uso' },
+  { id: 'cultura', name: 'Cultura de datos' },
+  { id: 'estrategia', name: 'Estrategia y acción' },
+];
+
+const QUESTIONS = [
+  // CAPTURA (3)
+  {
+    dim: 'captura',
+    q: '¿Cómo registra actualmente las transacciones o actividad de su negocio?',
+    sub: 'Piense en ventas, reservas, atenciones, pedidos o cualquier operación central.',
+    options: [
+      { text: 'Todo en papel o de memoria', sub: 'Sin sistema digital', score: 1 },
+      { text: 'Hojas de Excel o Google Sheets', sub: 'Manual, sin automatización', score: 2 },
+      { text: 'Sistema POS, ERP o software básico', sub: 'Registro automático parcial', score: 3 },
+      { text: 'Múltiples sistemas integrados', sub: 'Datos fluyen automáticamente', score: 4 },
+    ]
+  },
+  {
+    dim: 'captura',
+    q: '¿Con qué frecuencia captura o actualiza sus datos operativos?',
+    sub: 'Ventas, inventario, clientes, producción.',
+    options: [
+      { text: 'No tengo un proceso definido', sub: 'Ad hoc o nunca', score: 1 },
+      { text: 'Semanal o mensualmente', sub: 'Con rezago significativo', score: 2 },
+      { text: 'Diariamente', sub: 'Rutina establecida', score: 3 },
+      { text: 'En tiempo real o casi real', sub: 'Automático y continuo', score: 4 },
+    ]
+  },
+  {
+    dim: 'captura',
+    q: '¿Tiene datos históricos de su negocio disponibles?',
+    sub: 'Ventas pasadas, clientes, inventario, operaciones.',
+    options: [
+      { text: 'No, o están perdidos', sub: 'Sin historial recuperable', score: 1 },
+      { text: 'Menos de 6 meses', sub: 'Historial limitado', score: 2 },
+      { text: '6 meses a 2 años', sub: 'Historial útil', score: 3 },
+      { text: 'Más de 2 años', sub: 'Historial sólido para análisis', score: 4 },
+    ]
+  },
+
+  // ALMACENAMIENTO (3)
+  {
+    dim: 'almacen',
+    q: '¿Dónde viven actualmente sus datos más importantes?',
+    sub: 'El lugar principal donde se guarda la información de su negocio.',
+    options: [
+      { text: 'No están guardados de forma consistente', sub: 'Documentos sueltos o sin sistema', score: 1 },
+      { text: 'Archivos locales en una computadora', sub: 'Excel, Word, sin respaldo automático', score: 2 },
+      { text: 'Nube básica (Drive, Dropbox, SharePoint)', sub: 'Con respaldo, sin estructura', score: 3 },
+      { text: 'Base de datos o plataforma estructurada', sub: 'SQL, ERP, sistema dedicado', score: 4 },
+    ]
+  },
+  {
+    dim: 'almacen',
+    q: '¿Qué tan fácil es encontrar un dato específico cuando lo necesita?',
+    sub: 'Por ejemplo: "¿cuánto vendimos el martes pasado?" o "¿cuál fue el cliente más frecuente del mes?"',
+    options: [
+      { text: 'Es muy difícil, a veces imposible', sub: 'No hay forma confiable de buscarlo', score: 1 },
+      { text: 'Tarda horas o días de búsqueda manual', sub: 'Hay que revisar varios archivos', score: 2 },
+      { text: 'Con algo de esfuerzo, en minutos', sub: 'Sé dónde buscar', score: 3 },
+      { text: 'Lo encuentro rápido en un sistema centralizado', sub: 'Un solo lugar, estructura clara', score: 4 },
+    ]
+  },
+  {
+    dim: 'almacen',
+    q: '¿Sus datos de diferentes áreas están conectados o son islas separadas?',
+    sub: 'Por ejemplo: ¿puede cruzar datos de ventas con inventario fácilmente?',
+    options: [
+      { text: 'Totalmente separados, sin conexión posible', sub: 'Islas de información', score: 1 },
+      { text: 'Separados pero los cruzo manualmente', sub: 'Copy-paste entre archivos', score: 2 },
+      { text: 'Algunos conectados, otros no', sub: 'Integración parcial', score: 3 },
+      { text: 'Todos integrados o fácilmente conectables', sub: 'Visión unificada', score: 4 },
+    ]
+  },
+
+  // ANÁLISIS Y USO (3)
+  {
+    dim: 'analisis',
+    q: '¿Cómo analiza actualmente el desempeño de su negocio?',
+    sub: 'El proceso que usa para entender qué está pasando.',
+    options: [
+      { text: 'Por intuición o experiencia personal', sub: 'Sin análisis formal', score: 1 },
+      { text: 'Reviso números básicos en Excel una vez al mes', sub: 'Análisis mínimo, reactivo', score: 2 },
+      { text: 'Tengo reportes o dashboards que reviso regularmente', sub: 'Seguimiento establecido', score: 3 },
+      { text: 'Tengo KPIs definidos y alertas automáticas', sub: 'Gestión proactiva por datos', score: 4 },
+    ]
+  },
+  {
+    dim: 'analisis',
+    q: '¿Ha tomado decisiones de negocio importantes basadas en datos en los últimos 6 meses?',
+    sub: 'Cambios en precios, productos, horarios, personal, proveedores.',
+    options: [
+      { text: 'No, las decisiones son por instinto o tradición', sub: '', score: 1 },
+      { text: 'Alguna vez, pero fue ocasional', sub: 'Sin proceso sistemático', score: 2 },
+      { text: 'Sí, varias veces', sub: 'Con cierta estructura', score: 3 },
+      { text: 'Sí, es parte habitual de cómo gestionamos', sub: 'Proceso establecido', score: 4 },
+    ]
+  },
+  {
+    dim: 'analisis',
+    q: '¿Conoce las 3 métricas más importantes de su negocio en este momento?',
+    sub: 'Ticket promedio, tasa de ocupación, costo por producto, margen, etc.',
+    options: [
+      { text: 'No tengo claras cuáles son', sub: '', score: 1 },
+      { text: 'Tengo una idea general pero no las mido formalmente', sub: '', score: 2 },
+      { text: 'Sí las conozco pero no las sigo diariamente', sub: '', score: 3 },
+      { text: 'Sí, las tengo definidas y las monitoreo constantemente', sub: '', score: 4 },
+    ]
+  },
+
+  // CULTURA (3)
+  {
+    dim: 'cultura',
+    q: '¿Qué tan cómodo se siente usted tomando decisiones basadas en datos?',
+    sub: 'Como dueño o gerente principal.',
+    options: [
+      { text: 'Prefiero la experiencia sobre los números', sub: 'Los datos me generan desconfianza o confusión', score: 1 },
+      { text: 'Los uso si están disponibles pero no los busco', sub: 'Actitud neutral', score: 2 },
+      { text: 'Los busco activamente para decisiones importantes', sub: 'Actitud favorable', score: 3 },
+      { text: 'No tomo decisiones sin datos que las respalden', sub: 'Cultura data-driven', score: 4 },
+    ]
+  },
+  {
+    dim: 'cultura',
+    q: '¿Su equipo usa datos en su trabajo del día a día?',
+    sub: 'Mandos medios, gerentes de área, personal operativo.',
+    options: [
+      { text: 'No, solo yo (dueño) reviso números ocasionalmente', sub: '', score: 1 },
+      { text: 'Algunos reportes, pero no hay hábito establecido', sub: '', score: 2 },
+      { text: 'Al menos un área revisa datos regularmente', sub: '', score: 3 },
+      { text: 'La mayoría de áreas toman decisiones con datos', sub: '', score: 4 },
+    ]
+  },
+  {
+    dim: 'cultura',
+    q: '¿Ha invertido antes en herramientas o personas para mejorar el uso de datos?',
+    sub: 'Software, consultores, capacitaciones, analistas.',
+    options: [
+      { text: 'No, nunca ha sido prioridad', sub: '', score: 1 },
+      { text: 'Lo hemos considerado pero no concretado', sub: '', score: 2 },
+      { text: 'Sí, con resultados mixtos', sub: 'Algo funcionó, algo no', score: 3 },
+      { text: 'Sí, con buenos resultados y disposición a continuar', sub: '', score: 4 },
+    ]
+  },
+
+  // ESTRATEGIA (3)
+  {
+    dim: 'estrategia',
+    q: '¿Tiene claridad sobre qué pregunta de negocio quiere responder con datos?',
+    sub: 'Por ejemplo: "¿por qué bajaron las ventas los martes?" o "¿qué productos debo eliminar?"',
+    options: [
+      { text: 'No, no tengo una pregunta clara', sub: '', score: 1 },
+      { text: 'Tengo preguntas vagas, nada concreto', sub: '', score: 2 },
+      { text: 'Tengo 1-2 preguntas claras que quiero responder', sub: '', score: 3 },
+      { text: 'Tengo una agenda de análisis definida por prioridad', sub: '', score: 4 },
+    ]
+  },
+  {
+    dim: 'estrategia',
+    q: '¿Qué tan urgente es para usted mejorar el uso de datos en su negocio?',
+    sub: 'Siendo honesto sobre la prioridad real.',
+    options: [
+      { text: 'No es urgente, tenemos otros problemas primero', sub: '', score: 1 },
+      { text: 'Importante pero no prioritario ahora mismo', sub: '', score: 2 },
+      { text: 'Prioritario, quiero avanzar en los próximos 3 meses', sub: '', score: 3 },
+      { text: 'Urgente, necesito resultados concretos ya', sub: '', score: 4 },
+    ]
+  },
+  {
+    dim: 'estrategia',
+    q: '¿Cuál describe mejor su situación con los datos hoy?',
+    sub: 'La afirmación con la que más se identifica.',
+    options: [
+      { text: 'Sé que debería usar datos pero no sé por dónde empezar', sub: '', score: 1 },
+      { text: 'Tengo datos pero no los uso bien', sub: 'Están ahí pero no dan valor', score: 2 },
+      { text: 'Uso algunos datos pero quiero un sistema más formal', sub: '', score: 3 },
+      { text: 'Tengo una base sólida y quiero el siguiente nivel', sub: 'Optimización y estrategia', score: 4 },
+    ]
+  },
+];
+
+const TOTAL = QUESTIONS.length;
+let current = 0;
+let answers = new Array(TOTAL).fill(null);
+
+function buildQuestions() {
+  const container = document.getElementById('questions-container');
+  QUESTIONS.forEach((q, i) => {
+    const dim = DIMS.find(d => d.id === q.dim);
+    const block = document.createElement('div');
+    block.className = 'question-block' + (i === 0 ? ' active' : '');
+    block.id = 'q-' + i;
+    block.innerHTML = `
+      <span class="dimension-tag">${dim.name}</span>
+      <div class="question-text">${q.q}</div>
+      ${q.sub ? `<div class="question-sub">${q.sub}</div>` : ''}
+      <div class="options">
+        ${q.options.map((opt, oi) => `
+          <button class="option" onclick="selectOption(${i}, ${oi}, ${opt.score})" id="opt-${i}-${oi}">
+            <div class="option-score">${oi + 1}</div>
+            <div>
+              <div class="option-text">${opt.text}</div>
+              ${opt.sub ? `<div class="option-sub">${opt.sub}</div>` : ''}
+            </div>
+          </button>
+        `).join('')}
+      </div>
+    `;
+    container.appendChild(block);
+  });
+}
+
+function selectOption(qi, oi, score) {
+  answers[qi] = score;
+  document.querySelectorAll(`[id^="opt-${qi}-"]`).forEach(el => el.classList.remove('selected'));
+  document.getElementById(`opt-${qi}-${oi}`).classList.add('selected');
+  const btn = document.getElementById('btn-next');
+  btn.classList.add('enabled');
+  btn.textContent = qi === TOTAL - 1 ? 'Ver mi resultado →' : 'Siguiente →';
+}
+
+function updateProgress() {
+  const pct = Math.round((current / TOTAL) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = `Pregunta ${current + 1} de ${TOTAL}`;
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('btn-back').style.visibility = current === 0 ? 'hidden' : 'visible';
+  const btn = document.getElementById('btn-next');
+  btn.classList.toggle('enabled', answers[current] !== null);
+  btn.textContent = current === TOTAL - 1 ? 'Ver mi resultado →' : 'Siguiente →';
+}
+
+function nextQ() {
+  if (answers[current] === null) return;
+  if (current === TOTAL - 1) { showResult(); return; }
+  document.getElementById('q-' + current).classList.remove('active');
+  current++;
+  document.getElementById('q-' + current).classList.add('active');
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function prevQ() {
+  if (current === 0) return;
+  document.getElementById('q-' + current).classList.remove('active');
+  current--;
+  document.getElementById('q-' + current).classList.add('active');
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function calcDimScore(dimId) {
+  const indices = QUESTIONS.map((q, i) => q.dim === dimId ? i : -1).filter(i => i >= 0);
+  const total = indices.reduce((sum, i) => sum + (answers[i] || 0), 0);
+  const max = indices.length * 4;
+  return { score: total, max, pct: Math.round((total / max) * 100) };
+}
+
+function showResult() {
+  document.getElementById('questions-container').style.display = 'none';
+  document.getElementById('quiz-nav').style.display = 'none';
+  document.getElementById('progress-wrap').style.display = 'none';
+  document.getElementById('quiz-header').style.display = 'none';
+
+  const total = answers.reduce((a, b) => a + (b || 0), 0);
+  const maxScore = TOTAL * 4;
+  const pct = total / maxScore;
+
+  let tier, tierClass, tierLabel, title, desc, service, servicePrice, serviceDesc;
+
+  if (pct < 0.4) {
+    tier = 'scout'; tierClass = 'tier-scout'; tierLabel = 'Madurez Inicial';
+    title = 'Sus datos existen — ahora necesita verlos trabajar.';
+    desc = 'Su negocio ya genera información valiosa, pero aún no está siendo capturada, organizada ni usada sistemáticamente. El siguiente paso es revelar qué oportunidades están escondidas en sus datos actuales — sin grandes inversiones.';
+    service = 'Scout'; servicePrice = '$250 · Sesión única · Entrega en 24h';
+    serviceDesc = 'Una sesión de diagnóstico de 90 minutos con entrega de un prototipo real con sus 3 métricas más críticas. Verá sus propios números funcionando antes de comprometerse a nada más.';
+  } else if (pct < 0.7) {
+    tier = 'meridian'; tierClass = 'tier-meridian'; tierLabel = 'Madurez en Desarrollo';
+    title = 'Tiene la base — es momento de construir el sistema.';
+    desc = 'Su negocio ya captura datos y tiene algunos procesos de análisis, pero aún no cuenta con un sistema de BI formal y centralizado. Hay decisiones importantes que está tomando sin la información completa que ya podría tener.';
+    service = 'Meridian'; servicePrice = '$2,500 · Proyecto fijo · 8 semanas';
+    serviceDesc = 'Implementación completa de Business Intelligence calibrada a su industria: conexión de fuentes, modelo de datos en la nube, 3 dashboards en Power BI y capacitación de su equipo. Con 30 días de soporte incluidos.';
+  } else {
+    tier = 'zenith'; tierClass = 'tier-zenith'; tierLabel = 'Madurez Avanzada';
+    title = 'Tiene el sistema — ahora necesita convertirlo en ventaja estratégica.';
+    desc = 'Su negocio ya usa datos en la toma de decisiones y tiene infraestructura analítica. El siguiente nivel es tener un partner estratégico que evolucione el sistema, genere análisis especiales y convierta los datos en dirección de negocio.';
+    service = 'Zenith'; servicePrice = '$600/mes · Mínimo 6 meses';
+    serviceDesc = 'Vanta actúa como su Chief Data Officer externo: sesión estratégica mensual, reporte ejecutivo con insights priorizados, actualización de dashboards, alertas críticas y soporte continuo. Por menos del costo de un analista junior.';
+  }
+
+  const resultEl = document.getElementById('result-screen');
+  resultEl.innerHTML = `
+    <div class="result-score-row">
+      <div class="result-score-num">${total}</div>
+      <div class="result-score-max">/ ${maxScore} puntos</div>
+    </div>
+    <div class="result-tier ${tierClass}">${tierLabel}</div>
+    <div class="result-title">${title}</div>
+    <p class="result-desc">${desc}</p>
+
+    <div class="dim-grid">
+      ${DIMS.map(d => {
+        const ds = calcDimScore(d.id);
+        const fillClass = ds.pct < 40 ? 'fill-low' : ds.pct < 70 ? 'fill-mid' : 'fill-high';
+        return `
+          <div class="dim-row">
+            <div class="dim-row-header">
+              <span class="dim-name">${d.name}</span>
+              <span class="dim-score">${ds.score}/${ds.max}</span>
+            </div>
+            <div class="dim-track">
+              <div class="dim-fill ${fillClass}" style="width: ${ds.pct}%"></div>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-header">
+        <div class="tag">Servicio recomendado</div>
+        <div class="rec-name">${service}</div>
+        <div class="rec-price">${servicePrice}</div>
+      </div>
+      <div class="rec-body">
+        <p>${serviceDesc}</p>
+      </div>
+    </div>
+
+    <div class="result-actions">
+      <a href="https://wa.me/50200000000?text=Hola,%20hice%20el%20cuestionario%20de%20madurez%20analítica%20y%20me%20gustaría%20saber%20más%20sobre%20${service}." class="btn-primary" target="_blank">Agendar diagnóstico gratis por WhatsApp</a>
+      <a href="index.html" class="btn-secondary">Ver todos los servicios</a>
+    </div>
+  `;
+
+  resultEl.classList.add('visible');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+buildQuestions();
+updateProgress();
+</script>
+
+</body>
+</html>
