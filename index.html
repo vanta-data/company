@@ -156,6 +156,80 @@
     max-width: 58ch; line-height: 1.8; margin-bottom: 3.5rem; font-weight: 300;
   }
 
+  /* QUIÉNES SOMOS */
+  #quienes { background: var(--slate); }
+  .quienes-wrap { max-width: 760px; }
+  .quienes-quote {
+    border-left: 3px solid var(--lime);
+    padding: 1.5rem 2rem;
+    background: rgba(132,204,22,0.05);
+    border-radius: 0 8px 8px 0;
+    margin: 1.5rem 0;
+  }
+  .quienes-quote p { font-size: 1.125rem; color: var(--cool-gray); line-height: 1.85; font-weight: 300; }
+  .quienes-quote strong { color: var(--lime); font-weight: 500; }
+  .quienes-sub { font-family: 'Ubuntu Mono', monospace; font-size: 0.875rem; color: var(--purple); letter-spacing: 0.05em; }
+
+  /* POR QUÉ VANTA */
+  #porque { background: var(--midnight); }
+  .porque-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: 12px; overflow: hidden; margin-top: 0; }
+  .porque-card { padding: 2.5rem 2.25rem; background: var(--slate); }
+  .porque-icon { font-size: 1.75rem; margin-bottom: 1rem; }
+  .porque-card h3 { font-weight: 700; font-size: 1.125rem; color: var(--soft-white); margin-bottom: 0.75rem; }
+  .porque-card p { font-size: 0.9375rem; color: var(--cool-gray); line-height: 1.75; font-weight: 300; }
+
+  /* CÓMO AYUDAMOS */
+  #como { background: var(--slate); }
+  .como-grid { display: flex; flex-direction: column; gap: 1px; background: var(--border); border-radius: 12px; overflow: hidden; }
+  .como-item {
+    display: flex; align-items: flex-start; gap: 2rem;
+    padding: 1.75rem 2.25rem; background: var(--midnight);
+    transition: background 0.2s;
+  }
+  .como-item:hover { background: rgba(255,255,255,0.02); }
+  .como-num {
+    font-family: 'Ubuntu Mono', monospace; font-size: 0.75rem;
+    color: var(--purple); font-weight: 700; letter-spacing: 0.05em;
+    flex-shrink: 0; padding-top: 0.25rem; min-width: 2rem;
+  }
+  .como-item h4 { font-weight: 700; font-size: 1rem; color: var(--soft-white); margin-bottom: 0.375rem; }
+  .como-item p { font-size: 0.9375rem; color: var(--cool-gray); line-height: 1.65; font-weight: 300; }
+
+  /* SUCCESS PATH */
+  #proceso { background: var(--midnight); }
+  .path-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .path-step {
+    padding: 2rem 1.5rem; background: var(--slate);
+    border: 1px solid var(--border); border-right: none;
+    position: relative; text-align: center;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%, 20px 50%);
+    margin-left: -1px;
+  }
+  .path-step:first-child { clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%); margin-left: 0; }
+  .path-step-lime { background: var(--lime) !important; }
+  .path-icon { font-size: 1.75rem; margin-bottom: 0.75rem; display: block; }
+  .path-num {
+    font-family: 'Ubuntu Mono', monospace; font-size: 0.625rem;
+    letter-spacing: 0.15em; color: var(--cool-gray);
+    margin-bottom: 0.5rem; display: block;
+  }
+  .path-num-lime { color: rgba(0,0,0,0.5) !important; }
+  .path-step h4 { font-weight: 700; font-size: 0.9375rem; color: var(--soft-white); margin-bottom: 0.375rem; line-height: 1.3; }
+  .path-step-lime h4 { color: #0F1900; }
+  .path-step p { font-size: 0.8125rem; color: var(--cool-gray); font-style: italic; font-weight: 300; line-height: 1.5; }
+  .path-step-lime p { color: rgba(0,0,0,0.6); }
+
+  /* RESPONSIVE additions */
+  @media (max-width: 768px) {
+    .porque-grid { grid-template-columns: 1fr; }
+    .path-grid { grid-template-columns: 1fr 1fr; }
+    .path-step { clip-path: none !important; margin-left: 0; border-right: 1px solid var(--border); }
+    .como-item { gap: 1.25rem; padding: 1.5rem 1.25rem; }
+  }
+  @media (max-width: 480px) {
+    .path-grid { grid-template-columns: 1fr; }
+  }
+
   /* SERVICES */
   #servicios { background: var(--midnight); }
   .service-grid { display: flex; flex-direction: column; gap: 1px; background: var(--border); border-radius: 12px; overflow: hidden; }
@@ -253,7 +327,9 @@
     Vanta <span>Analytics</span>
   </a>
   <div class="nav-links">
+    <a href="#quienes">Nosotros</a>
     <a href="#servicios">Servicios</a>
+    <a href="#proceso">Proceso</a>
     <a href="cuestionario.html" class="nav-cta">Evalúe su negocio →</a>
   </div>
 </nav>
@@ -287,6 +363,137 @@
     </div>
   </div>
 </div>
+
+<hr class="divider">
+
+<!-- QUIÉNES SOMOS -->
+<section id="quienes">
+  <div class="section-inner">
+    <div class="quienes-wrap">
+      <p class="section-eyebrow">Quiénes somos</p>
+      <h2>Somos Vanta.</h2>
+      <div class="quienes-quote">
+        <p>Trabajamos con empresas que tienen datos pero no los están aprovechando para crecer. Convertimos esa información dispersa en dashboards, modelos predictivos y estrategias claras que generan <strong>resultados medibles</strong> — sin que necesite un equipo técnico interno.</p>
+      </div>
+      <p class="quienes-sub">Analítica inteligente para un crecimiento imparable.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- POR QUÉ VANTA -->
+<section id="porque">
+  <div class="section-inner">
+    <p class="section-eyebrow">Por qué Vanta</p>
+    <h2>No llegamos a aprender.<br><em>Llegamos a resolver.</em></h2>
+    <div class="porque-grid">
+      <div class="porque-card">
+        <div class="porque-icon">💡</div>
+        <h3>Experiencia real</h3>
+        <p>Más de 10 años trabajando con datos en empresas líderes de Guatemala. Conocemos cómo operan los negocios de acá: sus sistemas, sus procesos, sus puntos ciegos.</p>
+      </div>
+      <div class="porque-card">
+        <div class="porque-icon">🏗️</div>
+        <h3>Capacidad interna</h3>
+        <p>No solo resolvemos el problema y nos vamos. Formamos a su equipo para que el conocimiento analítico se quede dentro de su empresa — y no dependa siempre de un externo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CÓMO PODEMOS AYUDARLE -->
+<section id="como">
+  <div class="section-inner">
+    <p class="section-eyebrow">Cómo podemos ayudarle</p>
+    <h2>Cinco áreas.<br>Un solo <em>objetivo.</em></h2>
+    <p class="section-intro">Cada área de trabajo está diseñada para convertir sus datos en una ventaja competitiva concreta.</p>
+    <div class="como-grid">
+      <div class="como-item">
+        <div class="como-num">01</div>
+        <div>
+          <h4>Inteligencia de Negocios</h4>
+          <p>¿Cuánto pierde por no ver su negocio en tiempo real? Dashboards que le dan claridad total en minutos, no en días.</p>
+        </div>
+      </div>
+      <div class="como-item">
+        <div class="como-num">02</div>
+        <div>
+          <h4>Analítica Avanzada</h4>
+          <p>Anticipe problemas antes de que ocurran. Modelos predictivos que reducen costos y detectan oportunidades que el ojo humano no ve.</p>
+        </div>
+      </div>
+      <div class="como-item">
+        <div class="como-num">03</div>
+        <div>
+          <h4>Estrategia y Consultoría</h4>
+          <p>Un experto que le dice la verdad sobre sus datos y le ayuda a construir una hoja de ruta concreta hacia el crecimiento.</p>
+        </div>
+      </div>
+      <div class="como-item">
+        <div class="como-num">04</div>
+        <div>
+          <h4>Arquitectura de datos</h4>
+          <p>¿Sus datos están dispersos en Excel, sistemas distintos y correos? Los ordenamos para que pueda reportar con confianza.</p>
+        </div>
+      </div>
+      <div class="como-item">
+        <div class="como-num">05</div>
+        <div>
+          <h4>Academia</h4>
+          <p>Formamos a su equipo para que el conocimiento analítico se quede en su empresa — no se vaya con el consultor.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- VANTA SUCCESS PATH -->
+<section id="proceso">
+  <div class="section-inner">
+    <p class="section-eyebrow">Nuestro proceso</p>
+    <h2>The Vanta Success Path™</h2>
+    <p class="section-intro">Nuestro enfoque comprobado en 4 pasos — de la primera conversación a resultados medibles.</p>
+    <div class="path-grid">
+      <div class="path-step">
+        <div class="path-arrow">
+          <div class="path-icon">🤝</div>
+        </div>
+        <div class="path-num">01</div>
+        <h4>Entender su negocio</h4>
+        <p>Reunión inicial sin costo</p>
+      </div>
+      <div class="path-step">
+        <div class="path-arrow">
+          <div class="path-icon">🔍</div>
+        </div>
+        <div class="path-num">02</div>
+        <h4>Identificar la necesidad</h4>
+        <p>Diagnóstico de puntos ciegos</p>
+      </div>
+      <div class="path-step">
+        <div class="path-arrow">
+          <div class="path-icon">⚙️</div>
+        </div>
+        <div class="path-num">03</div>
+        <h4>Construir la solución</h4>
+        <p>Implementación a medida</p>
+      </div>
+      <div class="path-step path-step-lime">
+        <div class="path-arrow path-arrow-lime">
+          <div class="path-icon">📈</div>
+        </div>
+        <div class="path-num path-num-lime">04</div>
+        <h4>Generar impacto real</h4>
+        <p>Resultados medibles en 30–90 días</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <hr class="divider">
 
