@@ -457,29 +457,27 @@ function showResult() {
   const maxScore = TOTAL * 4;
   const pct = total / maxScore;
 
-  let tier, tierClass, title, desc, service, servicePrice, serviceDesc;
+  let tier, tierClass, title, desc, service, serviceDesc;
 
   if (pct < 0.4) {
     tier = 'Madurez Inicial'; tierClass = 'tier-scout';
     title = 'Sus datos existen — ahora necesita verlos trabajar.';
     desc = 'Su negocio ya genera información valiosa, pero aún no está siendo capturada, organizada ni usada sistemáticamente. El siguiente paso es revelar qué oportunidades están escondidas en sus datos actuales — sin grandes inversiones.';
-    service = 'Scout'; servicePrice = '$250 · Sesión única · Entrega en 24h';
+    service = 'Scout';
     serviceDesc = 'Una sesión de diagnóstico de 90 minutos con entrega de un prototipo real con sus 3 métricas más críticas. Verá sus propios números funcionando antes de comprometerse con algo más.';
   } else if (pct < 0.7) {
     tier = 'Madurez en Desarrollo'; tierClass = 'tier-meridian';
     title = 'Tiene la base — es momento de construir el sistema.';
     desc = 'Su negocio ya captura datos y tiene algunos procesos de análisis, pero aún no cuenta con un sistema de BI formal y centralizado. Hay decisiones importantes que está tomando sin la información completa que ya podría tener.';
-    service = 'Meridian'; servicePrice = '$2,500 · Proyecto fijo · 8 semanas';
+    service = 'Meridian';
     serviceDesc = 'Implementación completa de Business Intelligence calibrada a su industria: conexión de fuentes, modelo de datos en la nube, 3 dashboards en Power BI y capacitación de su equipo. Con 30 días de soporte incluidos.';
   } else {
     tier = 'Madurez Avanzada'; tierClass = 'tier-zenith';
     title = 'Tiene el sistema — ahora necesita convertirlo en ventaja estratégica.';
     desc = 'Su negocio ya usa datos en la toma de decisiones y tiene infraestructura analítica. El siguiente nivel es un partner estratégico que evolucione el sistema, genere análisis especiales y convierta los datos en dirección de negocio.';
-    service = 'Zenith'; servicePrice = '$600/mes · Mínimo 6 meses';
+    service = 'Zenith';
     serviceDesc = 'Vanta actúa como su Chief Data Officer externo: sesión estratégica mensual, reporte ejecutivo con insights priorizados, actualización de dashboards, alertas críticas y soporte continuo. Por menos del costo de un analista junior.';
   }
-
-  const waMsg = encodeURIComponent(`Hola, hice el cuestionario de madurez analítica (${total}/${maxScore} pts) y me gustaría saber más sobre ${service}.`);
 
   document.getElementById('result-content').innerHTML = `
     <div class="result-score-row">
@@ -512,7 +510,6 @@ function showResult() {
       <div class="rec-header">
         <div class="rec-tag">Servicio recomendado</div>
         <div class="rec-name">${service}</div>
-        <div class="rec-price">${servicePrice}</div>
       </div>
       <div class="rec-body">
         <p>${serviceDesc}</p>
@@ -520,7 +517,7 @@ function showResult() {
     </div>
 
     <div class="result-actions">
-      <a href="https://wa.me/50200000000?text=${waMsg}" class="btn-lime" target="_blank">Agendar diagnóstico gratis →</a>
+      <a href="mailto:info@vanta-data.com" class="btn-lime">Hablemos →</a>
       <a href="index.html" class="btn-ghost-sm">Ver todos los servicios</a>
     </div>
   `;

@@ -133,11 +133,8 @@
   .tier-card.s .tier-label { background: var(--scout-bg); color: #E8805A; }
   .tier-card.m .tier-label { background: var(--meridian-bg); color: #60AADF; }
   .tier-card.z .tier-label { background: var(--zenith-bg); color: #4DC98A; }
-  .tier-row { display: flex; justify-content: space-between; align-items: flex-start; }
   .tier-name { font-weight: 700; font-size: 1rem; color: var(--soft-white); }
   .tier-sub { font-size: 0.8125rem; color: var(--cool-gray); margin-top: 0.125rem; font-weight: 300; }
-  .tier-price { font-family: 'Ubuntu Mono', monospace; font-size: 1.125rem; color: var(--soft-white); text-align: right; }
-  .tier-price .freq { font-size: 0.75rem; color: var(--cool-gray); display: block; margin-top: 0.125rem; }
 
   /* SECTION */
   section { padding: 5rem 2rem; }
@@ -164,7 +161,6 @@
   .service-grid { display: flex; flex-direction: column; gap: 1px; background: var(--border); border-radius: 12px; overflow: hidden; }
   .service-card { background: var(--midnight); }
   .service-header {
-    display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: start;
     padding: 2.25rem 2.25rem 2rem; border-bottom: 1px solid var(--border);
   }
   .service-tag {
@@ -184,13 +180,7 @@
   .price-main { font-family: 'Ubuntu Mono', monospace; font-size: 2.25rem; color: var(--soft-white); line-height: 1; }
   .price-gtq { font-size: 0.8125rem; color: var(--cool-gray); margin-top: 0.25rem; font-family: 'Ubuntu Mono', monospace; }
   .price-type { font-size: 0.75rem; color: var(--cool-gray); margin-top: 0.375rem; font-weight: 300; }
-  .service-body { display: grid; grid-template-columns: 1fr 1fr; }
-  .service-col { padding: 2rem 2.25rem; }
-  .service-col + .service-col { border-left: 1px solid var(--border); background: var(--slate); }
-  .service-col h4 {
-    font-family: 'Ubuntu Mono', monospace; font-size: 0.6875rem; letter-spacing: 0.1em;
-    color: var(--cool-gray); margin-bottom: 1.25rem; text-transform: uppercase;
-  }
+  .service-body { padding: 2rem 2.25rem; }
   .service-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
   .service-col ul li {
     font-size: 0.9375rem; color: var(--cool-gray);
@@ -198,30 +188,6 @@
   }
   .service-col ul li::before { content: '→'; position: absolute; left: 0; color: var(--purple); font-size: 0.8rem; top: 0.25rem; }
   .service-col ul li strong { color: var(--soft-white); font-weight: 500; }
-  .service-insight {
-    padding: 1.25rem 2.25rem; font-size: 0.875rem; line-height: 1.7;
-    border-top: 1px solid var(--border);
-    color: var(--cool-gray); font-weight: 300;
-    background: rgba(124,58,237,0.05);
-    border-left: 3px solid var(--purple);
-  }
-  .service-insight strong { color: var(--soft-white); font-weight: 500; }
-  .addon-strip {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1rem 2.25rem; gap: 1rem; flex-wrap: wrap;
-    border-top: 1px solid var(--border);
-    background: var(--meridian-bg);
-  }
-  .addon-strip p { font-size: 0.875rem; color: #60AADF; font-weight: 300; }
-  .addon-strip strong { font-weight: 500; }
-  .addon-price { font-family: 'Ubuntu Mono', monospace; font-size: 1.125rem; color: #60AADF; white-space: nowrap; }
-
-  /* FUNNEL */
-  #embudo { background: var(--slate); }
-  .funnel-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 3rem; }
-  .funnel-step { background: var(--midnight); padding: 2.25rem 2rem; position: relative; }
-  .funnel-step::after { content: '→'; position: absolute; right: -0.85rem; top: 50%; transform: translateY(-50%); color: var(--purple); font-size: 1rem; z-index: 1; }
-  .funnel-step:last-child::after { display: none; }
   .funnel-num { font-family: 'Ubuntu Mono', monospace; font-size: 2.375rem; line-height: 1; margin-bottom: 0.875rem; }
   .funnel-step:nth-child(1) .funnel-num { color: #E8805A; }
   .funnel-step:nth-child(2) .funnel-num { color: #60AADF; }
@@ -231,13 +197,6 @@
   .projection-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: 12px; overflow: hidden; }
   .proj-card { padding: 2.25rem; background: var(--midnight); }
   .proj-card h3 { font-family: 'Ubuntu Mono', monospace; font-size: 0.6875rem; letter-spacing: 0.1em; color: var(--cool-gray); margin-bottom: 1.5rem; text-transform: uppercase; }
-  .proj-line { display: flex; justify-content: space-between; align-items: baseline; padding: 0.625rem 0; border-bottom: 1px solid var(--border); font-size: 0.9375rem; }
-  .proj-line:last-of-type { border-bottom: none; }
-  .proj-label { color: var(--cool-gray); font-weight: 300; }
-  .proj-val { font-family: 'Ubuntu Mono', monospace; color: var(--soft-white); }
-  .proj-total { font-family: 'Ubuntu Mono', monospace; font-size: 2.25rem; color: var(--lime); margin-top: 1.25rem; line-height: 1; }
-  .proj-total-label { font-size: 0.8125rem; color: var(--cool-gray); margin-top: 0.375rem; font-weight: 300; }
-
   /* CTA */
   #contacto { background: var(--midnight); }
   .cta-block {
@@ -272,13 +231,6 @@
   @media (max-width: 768px) {
     .hero { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem 3rem; }
     .hero-visual { display: none; }
-    .service-body { grid-template-columns: 1fr; }
-    .service-col + .service-col { border-left: none; border-top: 1px solid var(--border); }
-    .service-header { grid-template-columns: 1fr; }
-    .service-price { text-align: left; }
-    .funnel-grid { grid-template-columns: 1fr; }
-    .funnel-step::after { display: none; }
-    .projection-grid { grid-template-columns: 1fr; }
     nav { padding: 0 1.25rem; }
     .nav-links { gap: 1rem; }
     section { padding: 3.5rem 1.25rem; }
@@ -302,7 +254,6 @@
   </a>
   <div class="nav-links">
     <a href="#servicios">Servicios</a>
-    <a href="#embudo">Proyección</a>
     <a href="cuestionario.html" class="nav-cta">Evalúe su negocio →</a>
   </div>
 </nav>
@@ -311,7 +262,7 @@
 <div class="hero">
   <div class="hero-content">
     <p class="hero-eyebrow">Guatemala · Datos &amp; Estrategia</p>
-    <h1>Sus datos ya <em>existen.</em><br>Empiece a usarlos.</h1>
+    <h1>Sus datos ya <em>existen.</em><br><em>Es hora de ponerlos</em> a trabajar.</h1>
     <p class="hero-sub">Convertimos los datos que su negocio ya genera en decisiones claras, dashboards accionables y ventaja competitiva — sin necesidad de contratar un equipo de datos interno.</p>
     <div class="hero-actions">
       <a href="cuestionario.html" class="btn-lime">Evalúe su madurez analítica</a>
@@ -321,33 +272,18 @@
   <div class="hero-visual">
     <div class="tier-card s">
       <span class="tier-label">SERVICIO 01</span>
-      <div class="tier-row">
-        <div>
-          <div class="tier-name">Scout</div>
-          <div class="tier-sub">Diagnóstico · Quick Win · 24h</div>
-        </div>
-        <div class="tier-price">$250<span class="freq">sesión única</span></div>
-      </div>
+      <div class="tier-name">Scout</div>
+      <div class="tier-sub">Diagnóstico · Quick Win · 24h</div>
     </div>
     <div class="tier-card m">
       <span class="tier-label">SERVICIO 02</span>
-      <div class="tier-row">
-        <div>
-          <div class="tier-name">Meridian</div>
-          <div class="tier-sub">Implementación BI · 8 semanas</div>
-        </div>
-        <div class="tier-price">$2,500<span class="freq">proyecto fijo</span></div>
-      </div>
+      <div class="tier-name">Meridian</div>
+      <div class="tier-sub">Implementación BI · 8 semanas</div>
     </div>
     <div class="tier-card z">
       <span class="tier-label">SERVICIO 03</span>
-      <div class="tier-row">
-        <div>
-          <div class="tier-name">Zenith</div>
-          <div class="tier-sub">CDO Externo · Retainer mensual</div>
-        </div>
-        <div class="tier-price">$600<span class="freq">/mes</span></div>
-      </div>
+      <div class="tier-name">Zenith</div>
+      <div class="tier-sub">CDO Externo · Retainer mensual</div>
     </div>
   </div>
 </div>
@@ -366,182 +302,64 @@
       <!-- SCOUT -->
       <div class="service-card">
         <div class="service-header">
-          <div>
-            <span class="service-tag tag-scout">SERVICIO 01</span>
-            <div class="service-name">Scout</div>
-            <p class="service-desc">Una sesión de diagnóstico que revela exactamente dónde están las oportunidades de datos en su negocio — y entrega un prototipo real con sus tres métricas más críticas, listo en 24 horas.</p>
-          </div>
-          <div class="service-price">
-            <div class="price-main">$250</div>
-            <div class="price-gtq">~Q1,980 GTQ</div>
-            <div class="price-type">Sesión única · Entrega en 24h</div>
-          </div>
+          <span class="service-tag tag-scout">SERVICIO 01</span>
+          <div class="service-name">Scout</div>
+          <p class="service-desc">Una sesión de diagnóstico que revela exactamente dónde están las oportunidades de datos en su negocio — y entrega un prototipo real con sus tres métricas más críticas, listo en 24 horas.</p>
         </div>
         <div class="service-body">
-          <div class="service-col">
-            <h4>Qué incluye</h4>
-            <ul>
-              <li>Entrevista estructurada de 90 min con dueño o gerente</li>
-              <li>Revisión de fuentes de datos actuales (POS, hojas de cálculo, sistemas básicos)</li>
-              <li>Score de madurez analítica en 5 dimensiones</li>
-              <li>Reporte de diagnóstico con hallazgos y oportunidades priorizadas</li>
-              <li>Identificación de 3 quick wins con datos existentes</li>
-            </ul>
-          </div>
-          <div class="service-col">
-            <h4>Quick Win incluido — Reporte MVP</h4>
-            <ul>
-              <li>Reporte ejecutivo de 1 página con las 3 métricas más críticas del negocio</li>
-              <li>Fuente: archivo Excel o CSV existente del cliente</li>
-              <li>Visualización básica funcional — prototipo MVP, no producción</li>
-              <li>Demuestra el valor de los datos que ya tienen pero no usan</li>
-            </ul>
-          </div>
-        </div>
-        <div class="service-insight">
-          <strong>Por qué funciona:</strong> Scout no es solo un diagnóstico — el prototipo entregado en vivo transforma la conversación. En lugar de convencer al dueño de que los datos son importantes, le mostramos sus propios números funcionando.
+          <ul>
+            <li>Entrevista estructurada de 90 min con dueño o gerente</li>
+            <li>Revisión de fuentes de datos actuales (POS, hojas de cálculo, sistemas básicos)</li>
+            <li>Score de madurez analítica en 5 dimensiones</li>
+            <li>Reporte de diagnóstico con hallazgos y oportunidades priorizadas</li>
+            <li>Identificación de 3 quick wins con datos existentes</li>
+            <li>Reporte ejecutivo de 1 página con las 3 métricas más críticas del negocio</li>
+            <li>Visualización básica funcional con datos existentes del cliente</li>
+          </ul>
         </div>
       </div>
 
       <!-- MERIDIAN -->
       <div class="service-card">
         <div class="service-header">
-          <div>
-            <span class="service-tag tag-meridian">SERVICIO 02</span>
-            <div class="service-name">Meridian</div>
-            <p class="service-desc">Un sistema de inteligencia de negocio completo y calibrado a su industria, implementado en 8 semanas. Conecta sus fuentes de datos, construye los dashboards que realmente necesita y capacita a su equipo para usarlos.</p>
-          </div>
-          <div class="service-price">
-            <div class="price-main">$2,500</div>
-            <div class="price-gtq">~Q19,800 GTQ</div>
-            <div class="price-type">Proyecto fijo · 8 semanas · 30 días soporte</div>
-          </div>
+          <span class="service-tag tag-meridian">SERVICIO 02</span>
+          <div class="service-name">Meridian</div>
+          <p class="service-desc">Un sistema de inteligencia de negocio completo y calibrado a su industria, implementado en 8 semanas. Conecta sus fuentes de datos, construye los dashboards que realmente necesita y capacita a su equipo para usarlos.</p>
         </div>
         <div class="service-body">
-          <div class="service-col">
-            <h4>Qué incluye</h4>
-            <ul>
-              <li>Conexión de hasta 3 fuentes de datos (POS, Excel, ERP básico)</li>
-              <li>Modelo de datos centralizado en la nube (Microsoft Fabric / GCP)</li>
-              <li>3 dashboards en Power BI calibrados a su industria</li>
-              <li>KPIs definidos junto al dueño — no los genéricos de plantilla</li>
-              <li>2 sesiones de capacitación para el equipo</li>
-              <li>30 días de soporte post-entrega incluidos</li>
-            </ul>
-          </div>
-          <div class="service-col">
-            <h4>Variantes por industria</h4>
-            <ul>
-              <li><strong>Meridian Resto</strong> — ventas por hora, merma, mesa vs. delivery</li>
-              <li><strong>Meridian Salud</strong> — ocupación, ingresos por especialidad, no-shows</li>
-              <li><strong>Meridian Retail</strong> — rotación, ABC de productos, margen por SKU</li>
-              <li><strong>Meridian Hotel</strong> — RevPAR, ocupación, canal de reserva</li>
-            </ul>
-          </div>
-        </div>
-        <div class="addon-strip">
-          <p><strong>Add-on · Meridian Care:</strong> Soporte técnico mensual + sesión de revisión de 45 min. El puente natural hacia Zenith sin el compromiso completo del retainer.</p>
-          <div class="addon-price">$150/mes</div>
-        </div>
-        <div class="service-insight">
-          <strong>La clave:</strong> "Calibrado a su industria" justifica el precio sobre freelancers. Un dueño de restaurante siente la diferencia entre un dashboard genérico y uno que habla de merma, turnos y delivery.
+          <ul>
+            <li>Conexión de hasta 3 fuentes de datos (POS, Excel, ERP básico)</li>
+            <li>Modelo de datos centralizado en la nube (Microsoft Fabric / GCP)</li>
+            <li>3 dashboards en Power BI calibrados a su industria</li>
+            <li>KPIs definidos junto al dueño — no los genéricos de plantilla</li>
+            <li>2 sesiones de capacitación para el equipo</li>
+            <li>30 días de soporte post-entrega incluidos</li>
+          </ul>
         </div>
       </div>
 
       <!-- ZENITH -->
       <div class="service-card">
         <div class="service-header">
-          <div>
-            <span class="service-tag tag-zenith">SERVICIO 03</span>
-            <div class="service-name">Zenith</div>
-            <p class="service-desc">Vanta Analytics actúa como el Chief Data Officer externo del negocio. No solo mantiene el sistema — lo evoluciona y convierte los datos en decisiones estratégicas mes a mes, sin el costo de contratar un equipo interno.</p>
-          </div>
-          <div class="service-price">
-            <div class="price-main">$600<span style="font-size:1.25rem; font-weight:300; font-family:'Ubuntu',sans-serif">/mes</span></div>
-            <div class="price-gtq">~Q4,758 GTQ</div>
-            <div class="price-type">Mínimo 6 meses</div>
-          </div>
+          <span class="service-tag tag-zenith">SERVICIO 03</span>
+          <div class="service-name">Zenith</div>
+          <p class="service-desc">Vanta Analytics actúa como el Chief Data Officer externo del negocio. No solo mantiene el sistema — lo evoluciona y convierte los datos en decisiones estratégicas mes a mes, sin el costo de contratar un equipo interno.</p>
         </div>
         <div class="service-body">
-          <div class="service-col">
-            <h4>Qué incluye</h4>
-            <ul>
-              <li>1 sesión estratégica mensual con el dueño o gerente (90 min)</li>
-              <li>Reporte ejecutivo mensual con insights priorizados</li>
-              <li>Actualización de dashboards según evolución del negocio</li>
-              <li>Alertas configuradas sobre métricas críticas</li>
-              <li>1 análisis especial por mes (campaña, apertura, temporada)</li>
-              <li>Soporte WhatsApp para consultas de datos (lunes a viernes)</li>
-            </ul>
-          </div>
-          <div class="service-col">
-            <h4>Por qué renueva el cliente</h4>
-            <ul>
-              <li>Ya tomó decisiones basadas en datos — y funcionaron</li>
-              <li>No sabe mantener el sistema por cuenta propia</li>
-              <li>$600/mes es menos que contratar un analista junior ($800–$1,200/mes)</li>
-              <li>El reporte mensual se convierte en insumo para juntas directivas</li>
-            </ul>
-          </div>
-        </div>
-        <div class="service-insight">
-          <strong>El pitch:</strong> No es "mantenimiento de dashboards" — es tener un CDO sin pagar salario de CDO. Un analista junior en Guatemala cuesta $800–$1,200/mes. Zenith ofrece 10+ años de experiencia y criterio analítico-estratégico por $600.
+          <ul>
+            <li>1 sesión estratégica mensual con el dueño o gerente (90 min)</li>
+            <li>Reporte ejecutivo mensual con insights priorizados</li>
+            <li>Actualización de dashboards según evolución del negocio</li>
+            <li>Alertas configuradas sobre métricas críticas</li>
+            <li>1 análisis especial por mes (campaña, apertura, temporada)</li>
+            <li>Soporte para consultas de datos (lunes a viernes)</li>
+          </ul>
         </div>
       </div>
 
     </div>
   </div>
 </section>
-
-<hr class="divider">
-
-<!-- EMBUDO Y PROYECCIÓN -->
-<section id="embudo">
-  <div class="section-inner">
-    <p class="section-eyebrow">Proyección</p>
-    <h2>Un embudo diseñado<br>para <em>escalar.</em></h2>
-    <p class="section-intro">Scout califica prospectos. Meridian construye el sistema. Zenith genera ingresos predecibles. Cada nivel alimenta el siguiente.</p>
-
-    <div class="funnel-grid">
-      <div class="funnel-step">
-        <div class="funnel-num">$250</div>
-        <div class="funnel-title">Scout</div>
-        <div class="funnel-sub">El cliente paga por ser calificado.<br>Meta: 4 por mes.</div>
-      </div>
-      <div class="funnel-step">
-        <div class="funnel-num">$2,500</div>
-        <div class="funnel-title">Meridian</div>
-        <div class="funnel-sub">Implementación BI completa.<br>Meta: 2 proyectos por mes.</div>
-      </div>
-      <div class="funnel-step">
-        <div class="funnel-num">$600</div>
-        <div class="funnel-title">Zenith</div>
-        <div class="funnel-sub">Retainer mensual predecible.<br>Meta: 8 clientes activos.</div>
-      </div>
-    </div>
-
-    <div class="projection-grid">
-      <div class="proj-card">
-        <h3>Proyección conservadora</h3>
-        <div class="proj-line"><span class="proj-label">Scout ×2</span><span class="proj-val">$500</span></div>
-        <div class="proj-line"><span class="proj-label">Meridian ×1</span><span class="proj-val">$2,500</span></div>
-        <div class="proj-line"><span class="proj-label">Zenith ×4</span><span class="proj-val">$2,400</span></div>
-        <div class="proj-total">~$5,400</div>
-        <div class="proj-total-label">ingresos mensuales</div>
-      </div>
-      <div class="proj-card">
-        <h3>Proyección escalada</h3>
-        <div class="proj-line"><span class="proj-label">Meridian ×2</span><span class="proj-val">$5,000</span></div>
-        <div class="proj-line"><span class="proj-label">Zenith ×8</span><span class="proj-val">$4,800</span></div>
-        <div class="proj-line"><span class="proj-label">Meridian Care</span><span class="proj-val">+variable</span></div>
-        <div class="proj-total">~$9,800</div>
-        <div class="proj-total-label">ingresos mensuales combinados</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
 
 <!-- CTA -->
 <section id="contacto">
@@ -552,7 +370,7 @@
       <p class="section-intro">Empiece con el cuestionario de madurez analítica — le toma 5 minutos y le dice exactamente en qué punto está su negocio y cuál es el mejor primer paso.</p>
       <div class="cta-actions">
         <a href="cuestionario.html" class="btn-lime">Evalúe su negocio gratis →</a>
-        <a href="https://wa.me/50200000000" class="btn-ghost" target="_blank">Hablar por WhatsApp</a>
+        <a href="mailto:info@vanta-data.com" class="btn-ghost">Hablemos</a>
       </div>
     </div>
   </div>
